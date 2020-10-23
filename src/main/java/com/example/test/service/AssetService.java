@@ -15,5 +15,6 @@ public class AssetService {
      * @param assetId 資産ID
      * @return
      */ 
+    
 
 }
