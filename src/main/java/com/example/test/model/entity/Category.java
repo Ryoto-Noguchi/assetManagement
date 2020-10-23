@@ -11,33 +11,17 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "mst_asset")
-public class Asset {
+@Table(name = "mst_category")
+public class Category {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     @Setter
-    private Integer id;
-
-    @Column(name = "category_id")
-    @Getter
-    @Setter
     private Integer categoryId;
 
-    @Column(name = "admin_name")
+    @Column(name = "category_name")
     @Getter
     @Setter
-    private String adminName;
-
-    @Column(name = "asset_name")
-    @Getter
-    @Setter
-    private String assetName;
-
-    @Column(name = "remarks")
-    @Getter
-    @Setter
-    private String remarks;
-
+    private String categoryName;
 }

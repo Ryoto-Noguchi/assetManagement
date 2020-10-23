@@ -6,14 +6,23 @@ CREATE TABLE mst_asset (
     category_id INTEGER,
     admin_name VARCHAR(32),
     asset_name VARCHAR(255),
-    remarks VARCHAR(255)
+    remarks VARCHAR(255),
+    serial_id VARCHAR(255),
+    purchase_date VARCHAR(255),
+    maker_name VARCHAR(255),
+    accessory VARCHAR(255),
+    storing_place VARCHAR(255),
+    FOREIGN KEY (category_id) REFERENCES mst_category (category_id)
 );
 
-CREATE TABLE category (
-    id INTEGER NOT NULL,
+CREATE TABLE mst_category (
+    category_id SERIAL PRIMARY KEY,
     category_name VARCHAR (255)
 );
 
-SELECT * FROM category;
+
+SELECT * FROM mst_category;
+SELECT * FROM mst_asset;
 
 DROP TABLE mst_asset;
+DROP TABLE category;
