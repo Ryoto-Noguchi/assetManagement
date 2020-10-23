@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Training</title>
+</head>
+<body>
+  <th:block th:fragment="pageHeader"><!-- th:block(他のhtmlファイルに埋め込んだ時にこのth:blockは消える) -->
+
+    <!-- jQeryのインポート -->
+    <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+    <!-- fontawesomeのインポート -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <!-- fontawesomeのアニメーション機能インポート -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.0.10/font-awesome-animation.css" type="text/css" media="all" />
+
+    <!-- CSSファイルインポート -->
+    <link href="/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+
+    <div class="headerTopBox">
+      <h1 class="headerLogoH1">
+        <a id="headerLogo" th:href="@{/index}">サンプル資産管理台帳</a>
+      </h1>
+    </div>
+  </th:block>
+</body>
+</html>

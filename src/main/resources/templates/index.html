@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>test</title>
+  </head>
+  <body>
+    <header th:insert="fragments/page_header::pageHeader"></header>
+    <main>
+      <div class="container">
+        <div class="register-box">
+          <h2 class="register-text">
+            <a th:href="@{/training/register}" id="register-link">資産登録</a>
+          </h2>
+        </div>
+        <form
+          th:action="@{/training/searchAsset}"
+          method="GET"
+          name="searchForm"
+          id="searchForm"
+        >
+          <!-- 資産ID検索窓 -->
+          <label for="assetId">資産ID</label>
+          <input
+            type="text"
+            name="assetId"
+            id="assetId"
+            th:value="${assetId}"
+          />
+          <!-- カテゴリ選択窓 -->
+          <label for="categoryId">資産種別</label>
+          <select name="categoryId" id="categoryId">
+            <option value="0">資産種別を選んで下さい</option>
+            <option
+              th:each="category:${categories}"
+              th:selected="${selected == category.categoryId}"
+              th:value="${category.categoryId}"
+              th:text="${category.categoryName}"
+            ></option>
+          </select>
+          <!-- 管理者名検索窓 -->
+          <label for="adminName">管理者</label>
+          <input
+            type="text"
+            name="adminName"
+            id="adminName"
+            th:value="${adminName}"
+          />
+          <!-- 検索ワード窓 -->
+          <label for="assetName">資産名</label>
+          <input
+            type="text"
+            name="assetName"
+            id="assetName"
+            th:value="${assetName}"
+          />
+          <button id="searchBtn" type="submit">検索</button>
+        </form>
+        <form id="csvform" method="post" th:action="@{/download/csv}">
+          <input type="hidden" name="filename" />
+          <button type="submit">CSV</button>
+        </form>
+
+        <!-- 検索エラーメッセージ表示 -->
+        <h1
+          class="errorMsg"
+          th:text="${assetIdErrorMsg}"
+          th:if="${assets == null}"
+        ></h1>
+
+        <!-- 資産リスト表示 -->
+        <table class="top" th:if="${assets != null && assets.size() != 0}">
+          <caption>
+            All assets list
+          </caption>
+          <thead>
+            <tr>
+              <th id="id_cell">資産ID</th>
+              <th id="categoryName_cell">資産種別</th>
+              <th id="adminName_cell">管理者名</th>
+              <th id="assetName_cell">資産名</th>
+              <th id="remarks_cell">備考</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="asset:${assets}">
+              <td class="assetIdColumn">
+                <!-- ↓AssetControllerへ飛ぶ -->
+                <a
+                  th:href="@{/training/assetDetail/{id}(id=${asset.id})}" 
+                  th:text="${#numbers.formatInteger(asset.id,4)}"
+                ></a>
+              </td>
+              <td class="categoryName" th:text="${asset.categoryName}"></td>
+              <td
+                class="adminName"
+                th:text="${asset.administratorName}"
+              ></td>
+              <td class="assetName" th:text="${asset.assetName}"></td>
+              <td class="remarks" th:text="${asset.remarks}"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </body>
+</html>
