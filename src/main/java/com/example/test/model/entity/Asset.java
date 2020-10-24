@@ -10,34 +10,43 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Entity
 @Table(name = "mst_asset")
+@Getter
+@Setter
 public class Asset {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
+    @Column(name = "id")
     private Integer id;
 
     @Column(name = "category_id")
-    @Getter
-    @Setter
-    private Integer categoryId;
+    private int categoryId;
 
     @Column(name = "admin_name")
-    @Getter
-    @Setter
     private String adminName;
 
     @Column(name = "asset_name")
-    @Getter
-    @Setter
     private String assetName;
 
     @Column(name = "remarks")
-    @Getter
-    @Setter
     private String remarks;
+
+    @Column(name = "serial_id")
+    private String serialId;
+
+    @Column(name = "purchase_date")
+    private String purchaseDate;
+
+    @Column(name = "maker_name")
+    private String makerName;
+
+    @Column(name = "accessory")
+    private String accessory;
+
+    @Column(name = "storing_place")
+    private String storingPlace;
 
 }

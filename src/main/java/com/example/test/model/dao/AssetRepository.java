@@ -4,12 +4,14 @@ import java.util.List;
 
 import com.example.test.model.entity.Asset;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AssetRepository extends JpaRepository<Asset, Integer> {
 
-    List<Asset> findAll();
+    Page<Asset> findAll(Pageable pageable);
     List<Asset> findById(int assetId);
-    
-    
+
+
 }

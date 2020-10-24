@@ -70,7 +70,7 @@
         ></h1>
 
         <!-- 資産リスト表示 -->
-        <table class="top" th:if="${assetList != null && assetList.size() != 0}">
+        <table class="top" th:if="${assetList != null && assetList.getSize() != 0}">
           <caption>
             All asset list
           </caption>
@@ -88,7 +88,7 @@
               <td class="assetIdColumn">
                 <!-- ↓AssetControllerへ飛ぶ -->
                 <a
-                  th:href="@{/index/assetDetail/{id}(id=${asset.id})}" 
+                  th:href="@{/index/assetDetail/{id}(id=${asset.id})}"
                   th:text="${#numbers.formatInteger(asset.id,4)}"
                 ></a>
               </td>
