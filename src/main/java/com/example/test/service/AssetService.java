@@ -67,6 +67,7 @@ public class AssetService {
         if (adminName == null) {f.setAdminName(null);}
         if (assetName == null) {f.setAssetName(null);}
         List<Asset> assets = assetRepos.findByIdAndCategoryIdAndAdminNameAndAssetName(id, categoryId, adminName, assetName);
+        System.out.println(assets);
 
         return null;
     }
