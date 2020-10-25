@@ -34,25 +34,18 @@ public class AssetService {
     public Page<Asset> findPaginatedPage(Pageable pageable) {
 
         int pageSize = pageable.getPageSize(); // 1ページあたりの表示するレコード数
-        System.out.println("ページサイズ：" + pageSize);
         int currentPage = pageable.getPageNumber(); // 現在のページ
-        System.out.println("現在ページ：" + currentPage);
         int startItem = pageSize * currentPage; // 現在表示しているページの1番上のレコード
-        System.out.println("現在ページの最後の資産ID：" + startItem);
         List<Asset> list = null; // Asset型の変数をnullで初期化して保持
         List<Asset> assets = assetRepos.findAll();
-        for (Asset asset : assets) {
-            System.out.println("取得した全資産ID：" + asset.getId());
-        }
         if (assets.size() < startItem) { // ???
             list = Collections.emptyList(); // 変数listを空のまま不変にする
         } else {
             int toIndex = Math.min(startItem + pageSize, assets.size()); //「現在表示しているページの1番上のレコード」＋「10」と「全レコード数」の小さい方をtoIndexとする
-            list = assets.subList(startItem, toIndex); // 「現在表示しているページの1番上のレコード」からtoIndexまでのレコード数
+            list = assets.subList(startItem, toIndex); // 「現在表示しているページの1番上のレコード」からtoIndexまでのレコード数 = リクエストされたページで表示したいレコード数
         }
 
-        Page<Asset> assetList = new PageImpl<Asset>(list, pageable, assets.size());
-
+        Page<Asset> assetList = new PageImpl<Asset>(list, pageable, assets.size()); // リクエストされたページに合致するレコード情報
         return assetList;
     }
 

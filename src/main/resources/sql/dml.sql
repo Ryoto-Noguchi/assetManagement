@@ -29,5 +29,8 @@ INSERT INTO mst_asset (category_id, admin_name, asset_name, remarks, serial_id, 
 INSERT INTO mst_asset (category_id, admin_name, asset_name, remarks, serial_id, purchase_date, maker_name, accessory, storing_place) VALUES (4, 'Jake', 'S', 'nothing', 'A62000', '2019-10-30', 'MicroSoft', 'X', 'B1' );
 INSERT INTO mst_asset (category_id, admin_name, asset_name, remarks, serial_id, purchase_date, maker_name, accessory, storing_place) VALUES (5, 'Kate', 'T', 'nothing', 'A31000', '2017-10-30', 'SEGA', 'X', 'B3' );
 INSERT INTO mst_asset (category_id, admin_name, asset_name, remarks, serial_id, purchase_date, maker_name, accessory, storing_place) VALUES (5, 'Lourence', 'U', 'nothing', 'A34000', '2018-11-30', 'Nintendo', 'X', 'B2' );
+INSERT INTO mst_asset (category_id, admin_name, asset_name, remarks, serial_id, purchase_date, maker_name, accessory, storing_place) VALUES (5, 'Monica', 'V', 'nothing', 'A33000', '2013-10-30', 'MicroSoft', 'X', 'B3' );
+INSERT INTO mst_asset (category_id, admin_name, asset_name, remarks, serial_id, purchase_date, maker_name, accessory, storing_place) VALUES (3, 'Nicolas', 'W', 'nothing', 'A24000', '2011-04-30', 'Apple', 'X', 'B1' );
+INSERT INTO mst_asset (category_id, admin_name, asset_name, remarks, serial_id, purchase_date, maker_name, accessory, storing_place) VALUES (4, 'Oscar', 'X', 'nothing', 'A24200', '2019-09-30', 'Amazon', 'X', 'B1' );
 
-SELECT * FROM mst_asset ORDER BY admin_name ASC;
+SELECT * FROM mst_asset ORDER BY id ASC;

@@ -108,11 +108,11 @@
       <nav
         aria-label="Page navigation"
         th:if="${assetList != null && assetList.getSize() != 0}"
-        th:each="pageNumber:${pageNumbers}"
       >
         <ul class="pagination">
           <th:block
             th:with="start = 1, end = ${lastPage}"
+            th:each="pageNumber:${pageNumbers}"
           >
             <li class="page-item">
               <a th:href="@{/index/1}" class="page-link" aria-label="Previous">
@@ -141,7 +141,7 @@
             </li>
             <li class="page-item">
               <a
-                th:href="@{/index/{page} (page = ${pageNumber + 1})}"
+                th:href="@{/index/{page} (page = ${pageNumber})}"
                 class="page-link"
                 aria-label="Next"
               >

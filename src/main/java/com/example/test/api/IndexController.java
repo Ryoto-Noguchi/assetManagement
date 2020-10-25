@@ -1,6 +1,7 @@
 package com.example.test.api;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -12,10 +13,7 @@ import com.example.test.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,14 +31,11 @@ public class IndexController {
   private CategoryService categoryService;
 
   @RequestMapping(path = { "/", "/{page:^[1-9][0-9]*$}" }, method = RequestMethod.GET)
-  public String assetList(@PathVariable(name = "page", required = false) Integer page,
-      @PageableDefault(page = 0, size = 10, direction = Direction.ASC, sort = "id") Pageable pageable, Model model) {
-
-    if (page != null) {
-      pageable = PageRequest.of(page, 10, Sort.by("id").ascending());
-    }
-    System.out.println("取得したページ番号：" + pageable.getPageNumber());
-    Page<Asset> assetList = assetService.findPaginatedPage(pageable);
+  public String assetList(@PathVariable(name = "page") Optional<Integer> page, Model model) {
+    int currentPage = page.orElse(1);
+    System.out.println("リクエストされたページ：" + currentPage);
+    int pageSize = 10;
+    Page<Asset> assetList = assetService.findPaginatedPage(PageRequest.of(currentPage - 1, pageSize, Sort.by("id").ascending()));
     for (Asset asset : assetList) {
       System.out.println("取得した資産ID：" + asset.getId());
     }
