@@ -7,12 +7,14 @@ import java.util.stream.IntStream;
 
 import com.example.test.model.entity.Asset;
 import com.example.test.model.entity.Category;
+import com.example.test.model.form.SearchForm;
 import com.example.test.service.AssetService;
 import com.example.test.service.CategoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,18 +32,24 @@ public class IndexController {
   @Autowired
   private CategoryService categoryService;
 
-  @RequestMapping(path = { "/", "/{page:^[1-9][0-9]*$}" }, method = RequestMethod.GET)
-  public String assetList(@PathVariable(name = "page") Optional<Integer> page, Model model) {
-    int currentPage = page.orElse(1);
-    System.out.println("リクエストされたページ：" + currentPage);
-    int pageSize = 10;
-    Page<Asset> assetList = assetService.findPaginatedPage(PageRequest.of(currentPage - 1, pageSize, Sort.by("id").ascending()));
-    for (Asset asset : assetList) {
-      System.out.println("取得した資産ID：" + asset.getId());
-    }
-    model.addAttribute("assetList", assetList);
+  public static final int PAGESIZE = 10;
+  public static final Sort SORT = Sort.by("id").ascending();
 
-    int totalPages = assetList.getTotalPages();
+  /**
+   * トップページの色初期表示とページ番号押下時の資産リスト表示
+   * @param page
+   * @param model
+   * @return リクエストされたページの資産リスト
+   */
+  @RequestMapping(path = { "/", "/{page:^[1-9][0-9]*$}" }, method = RequestMethod.GET)
+  public String assetPage(@PathVariable(name = "page") Optional<Integer> page, Model model) {
+    int currentPage = page.orElse(1); // リクエストされたページ
+    if (currentPage == 0) {currentPage = 1;} // 先頭ページを表示している際の「<」押下用
+    Pageable pageable = PageRequest.of(currentPage - 1, PAGESIZE, SORT);
+    Page<Asset> assetPage = assetService.findPaginatedPage(pageable);
+    model.addAttribute("assetPage", assetPage);
+
+    int totalPages = assetPage.getTotalPages(); // 最後ページ取得
     model.addAttribute("lastPage", totalPages);
 
     if (totalPages > 0) {
@@ -52,6 +60,16 @@ public class IndexController {
     List<Category> categoryList = categoryService.findAllCategories();
     model.addAttribute("categoryList", categoryList);
 
+    return "index";
+  }
+
+  @RequestMapping(value = "/searchAsset", method = RequestMethod.POST)
+  public String searchAsset(SearchForm f, @PathVariable(name = "page") Optional<Integer> page, Model model) {
+    int currentPage = page.orElse(1); // リクエストされたページ
+    if (currentPage == 0) {currentPage = 1;} // 先頭ページを表示している際の「<」押下用
+    Pageable pageable = PageRequest.of(currentPage - 1, PAGESIZE, SORT);
+    Page<Asset> assetPage = assetService.findSearchedAndPaginatedPage(f, pageable);
+    model.addAttribute("assetPage", assetPage);
     return "index";
   }
 

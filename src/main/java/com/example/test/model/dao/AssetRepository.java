@@ -13,6 +13,7 @@ public interface AssetRepository extends JpaRepository<Asset, Integer> {
     Page<Asset> findAll(Pageable pageable);
     List<Asset> findById(int assetId);
     List<Asset> findAll();
+	List<Asset> findByIdAndCategoryIdAndAdminNameAndAssetName(Integer id, Integer categoryId, String adminName, String assetName);
 
 
 }

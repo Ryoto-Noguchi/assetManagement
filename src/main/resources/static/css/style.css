@@ -1,0 +1,28 @@
+#headerLogo {
+  color: red;
+}
+
+#searchForm {
+  display: flex;
+  justify-content: center;
+}
+caption {
+  display: none;
+}
+
+ul.pagination {
+  display: flex;
+  list-style-type: none;
+  justify-content: space-around;
+  width: 50%;;
+}
+
+table.top {
+  margin: auto;
+}
+
+nav {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}

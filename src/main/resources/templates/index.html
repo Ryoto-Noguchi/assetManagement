@@ -14,20 +14,10 @@
             <a th:href="@{/index/register}" id="register-link">資産登録</a>
           </h2>
         </div>
-        <form
-          th:action="@{/index/searchAsset}"
-          method="GET"
-          name="searchForm"
-          id="searchForm"
-        >
+        <form th:action="@{/index/searchAsset}" method="POST" name="searchForm" id="searchForm">
           <!-- 資産ID検索窓 -->
-          <label for="assetId">資産ID</label>
-          <input
-            type="text"
-            name="assetId"
-            id="assetId"
-            th:value="${assetId}"
-          />
+          <label for="id">資産ID</label>
+          <input type="text" name="id" id="id" th:value="${id}"/>
           <!-- カテゴリ選択窓 -->
           <label for="categoryId">資産種別</label>
           <select name="categoryId" id="categoryId">
@@ -41,20 +31,10 @@
           </select>
           <!-- 管理者名検索窓 -->
           <label for="adminName">管理者</label>
-          <input
-            type="text"
-            name="adminName"
-            id="adminName"
-            th:value="${adminName}"
-          />
+          <input type="text" name="adminName" id="adminName" th:value="${adminName}"/>
           <!-- 検索ワード窓 -->
           <label for="assetName">資産名</label>
-          <input
-            type="text"
-            name="assetName"
-            id="assetName"
-            th:value="${assetName}"
-          />
+          <input type="text" name="assetName" id="assetName" th:value="${assetName}"/>
           <button id="searchBtn" type="submit">検索</button>
         </form>
         <form id="csvform" method="post" th:action="@{/download/csv}">
@@ -63,20 +43,11 @@
         </form>
 
         <!-- 検索エラーメッセージ表示 -->
-        <h1
-          class="errorMsg"
-          th:text="${assetIdErrorMsg}"
-          th:if="${assetList == null}"
-        ></h1>
+        <h1 class="errorMsg" th:text="${assetIdErrorMsg}" th:if="${assetPage == null}"></h1>
 
         <!-- 資産リスト表示 -->
-        <table
-          class="top"
-          th:if="${assetList != null && assetList.getSize() != 0}"
-        >
-          <caption>
-            All asset list
-          </caption>
+        <table class="top" th:if="${assetPage != null && assetPage.getSize() != 0}">
+          <caption> All asset list </caption>
           <thead>
             <tr>
               <th id="id_cell">資産ID</th>
@@ -87,7 +58,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr th:each="asset:${assetList}">
+            <tr th:each="asset:${assetPage}">
               <td class="assetIdColumn">
                 <!-- ↓AssetControllerへ飛ぶ -->
                 <a
@@ -105,61 +76,35 @@
       </div>
 
       <!-- ページング -->
-      <nav
-        aria-label="Page navigation"
-        th:if="${assetList != null && assetList.getSize() != 0}"
-      >
+      <th:block th:if="${assetPage.totalPages > 0}">
+        <nav aria-label="Page navigation">
         <ul class="pagination">
-          <th:block
-            th:with="start = 1, end = ${lastPage}"
-            th:each="pageNumber:${pageNumbers}"
-          >
-            <li class="page-item">
-              <a th:href="@{/index/1}" class="page-link" aria-label="Previous">
-                <span aria-hidden="true">&lt;&lt;</span>
-              </a>
-            </li>
-            <li class="page-item">
-              <a
-                th:href="@{/index/{page} (page = ${pageNumber - 1})}"
-                class="page-link"
-                aria-label="Previous"
-              >
-                <span aria-hidden="true">&lt;</span>
-              </a>
-            </li>
-            <li
-              class="page-item"
-              th:with="start = 1, end = ${lastPage}"
-              th:each="pageButton : ${#numbers.sequence(start, end)}"
-            >
-              <a
-                class="page-link"
-                th:href="@{/index/{page} (page = ${pageButton})}"
-                th:text="${pageButton}"
-              ></a>
-            </li>
-            <li class="page-item">
-              <a
-                th:href="@{/index/{page} (page = ${pageNumber})}"
-                class="page-link"
-                aria-label="Next"
-              >
-                <span aria-hidden="true">&gt;</span>
-              </a>
-            </li>
-            <li class="page-item">
-              <a
-                th:href="@{/index/{page} (page = ${lastPage})}"
-                class="page-link"
-                aria-label="Next"
-              >
-                <span aria-hidden="true">&gt;&gt;</span>
-              </a>
-            </li>
-          </th:block>
+          <li class="page-item">
+            <a th:href="@{/index/}" class="page-link" aria-label="Previous">
+              <span aria-hidden="true">&lt;&lt;</span>
+            </a>
+          </li>
+          <li class="page-item">
+            <a th:href="@{/index/{page} (page = ${assetPage.getNumber()})}" class="page-link" aria-label="Previous">
+              <span aria-hidden="true">&lt;</span>
+            </a>
+          </li>
+          <li class="page-item" th:with="start = 1, end = ${lastPage}" th:each="pageNumber : ${pageNumbers}">
+            <a class="page-link" th:href="@{/index/{page} (page = ${pageNumber})}" th:text="${pageNumber}"></a>
+          </li>
+          <li class="page-item">
+            <a th:href="@{/index/{page} (page = ${assetPage.getNumber() + 2})}" class="page-link" aria-label="Next">
+              <span aria-hidden="true">&gt;</span>
+            </a>
+          </li>
+          <li class="page-item">
+            <a th:href="@{/index/{page} (page = ${lastPage})}" class="page-link" aria-label="Next">
+              <span aria-hidden="true">&gt;&gt;</span>
+            </a>
+          </li>
         </ul>
-      </nav>
+        </nav>
+      </th:block>
     </main>
   </body>
 </html>
