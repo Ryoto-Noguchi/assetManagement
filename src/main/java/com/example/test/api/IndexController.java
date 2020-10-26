@@ -18,9 +18,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/index")
@@ -41,7 +42,7 @@ public class IndexController {
    * @param model
    * @return リクエストされたページの資産リスト
    */
-  @RequestMapping(path = { "/", "/{page:^[1-9][0-9]*$}" }, method = RequestMethod.GET)
+  @GetMapping(path = { "/", "/{page:^[1-9][0-9]*$}" })
   public String assetPage(@PathVariable(name = "page") Optional<Integer> page, Model model) {
     int currentPage = page.orElse(1); // リクエストされたページ
     if (currentPage == 0) {currentPage = 1;} // 先頭ページを表示している際の「<」押下用
@@ -63,7 +64,7 @@ public class IndexController {
     return "index";
   }
 
-  @RequestMapping(value = "/searchAsset", method = RequestMethod.POST)
+  @PostMapping(value = "/searchAsset")
   public String searchAsset(SearchForm f, @PathVariable(name = "page") Optional<Integer> page, Model model) {
     int currentPage = page.orElse(1); // リクエストされたページ
     if (currentPage == 0) {currentPage = 1;} // 先頭ページを表示している際の「<」押下用

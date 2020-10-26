@@ -34,3 +34,5 @@ INSERT INTO mst_asset (category_id, admin_name, asset_name, remarks, serial_id, 
 INSERT INTO mst_asset (category_id, admin_name, asset_name, remarks, serial_id, purchase_date, maker_name, accessory, storing_place) VALUES (4, 'Oscar', 'X', 'nothing', 'A24200', '2019-09-30', 'Amazon', 'X', 'B1' );
 
 SELECT * FROM mst_asset ORDER BY id ASC;
+
+SELECT * FROM mst_asset AS a LEFT JOIN mst_category AS c ON a.category_id = c.category_id WHERE a.id = 1;
