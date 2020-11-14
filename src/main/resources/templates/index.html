@@ -14,14 +14,14 @@
             <a th:href="@{/index/register}" id="register-link">資産登録</a>
           </h2>
         </div>
-        <form th:action="@{/index/searchAsset}" method="POST" name="searchForm" id="searchForm">
+        <form th:action="@{/index/searchAsset}" th:object="${searchForm}" method="POST" name="searchForm" id="searchForm">
           <!-- 資産ID検索窓 -->
           <label for="id">資産ID</label>
           <input type="text" name="id" id="id" th:value="${id}"/>
           <!-- カテゴリ選択窓 -->
           <label for="categoryId">資産種別</label>
           <select name="categoryId" id="categoryId">
-            <option value="0">資産種別を選んで下さい</option>
+            <option value="">資産種別を選んで下さい</option>
             <option
               th:each="category:${categoryList}"
               th:selected="${selected == category.categoryId}"
@@ -84,7 +84,7 @@
               <span aria-hidden="true">&lt;&lt;</span>
             </a>
           </li>
-          <li class="page-item">
+          <li class="page-item" th:if="${assetPage.getNumber() > 1}">
             <a th:href="@{/index/{page} (page = ${assetPage.getNumber()})}" class="page-link" aria-label="Previous">
               <span aria-hidden="true">&lt;</span>
             </a>
@@ -92,7 +92,7 @@
           <li class="page-item" th:with="start = 1, end = ${lastPage}" th:each="pageNumber : ${pageNumbers}">
             <a class="page-link" th:href="@{/index/{page} (page = ${pageNumber})}" th:text="${pageNumber}"></a>
           </li>
-          <li class="page-item">
+          <li class="page-item" th:if="${assetPage.totalPages > assetPage.getNumber() + 1 }">
             <a th:href="@{/index/{page} (page = ${assetPage.getNumber() + 2})}" class="page-link" aria-label="Next">
               <span aria-hidden="true">&gt;</span>
             </a>

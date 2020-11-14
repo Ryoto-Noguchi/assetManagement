@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,7 +37,7 @@ public class IndexController {
   public static final Sort SORT = Sort.by("id").ascending();
 
   /**
-   * トップページの色初期表示とページ番号押下時の資産リスト表示
+   * トップページの初期表示とページ番号押下時の資産リスト表示
    * @param page
    * @param model
    * @return リクエストされたページの資産リスト
@@ -64,7 +65,7 @@ public class IndexController {
   }
 
   @RequestMapping(value = "/searchAsset", method = RequestMethod.POST)
-  public String searchAsset(SearchForm f, @PathVariable(name = "page") Optional<Integer> page, Model model) {
+  public String searchAsset(@ModelAttribute("searchForm") SearchForm f, @PathVariable(name = "page") Optional<Integer> page, Model model) {
     int currentPage = page.orElse(1); // リクエストされたページ
     if (currentPage == 0) {currentPage = 1;} // 先頭ページを表示している際の「<」押下用
     Pageable pageable = PageRequest.of(currentPage - 1, PAGESIZE, SORT);
