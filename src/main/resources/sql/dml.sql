@@ -36,3 +36,12 @@ INSERT INTO mst_asset (category_id, admin_name, asset_name, remarks, serial_id, 
 SELECT * FROM mst_asset ORDER BY id ASC;
 
 SELECT * FROM mst_asset AS a LEFT JOIN mst_category AS c ON a.category_id = c.category_id WHERE a.id = 1;
+
+
+SELECT * FROM mst_asset a WHERE (a.id = :id OR :id IS NULL) AND (a.category_id = :categoryId OR :categoryId IS NULL) AND (a.admin_name = :adminName OR :adminName IS NULL) AND (a.asset_name = :assetName OR :assetName IS NULL)
+
+SELECT * FROM mst_asset a
+WHERE a.id = CASE WHEN :id IS NULL THEN a.id ELSE :id END
+AND a.category_id = CASE WHEN :categoryId IS NULL THEN a.category_id ELSE :categoryId END
+AND  a.admin_name = CASE WHEN :adminName IS NULL THEN a.admin_name ELSE :adminName END
+AND  a.asset_name = CASE WHEN :assetName IS NULL THEN a.asset_name ELSE :assetName END

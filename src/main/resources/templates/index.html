@@ -62,7 +62,7 @@
               <td class="assetIdColumn">
                 <!-- ↓AssetControllerへ飛ぶ -->
                 <a
-                  th:href="@{/index/assetDetail/{id}(id=${asset.id})}"
+                  th:href="@{/index/detail/{id}(id=${asset.id})}"
                   th:text="${#numbers.formatInteger(asset.id,4)}"
                 ></a>
               </td>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Management</title>
+</head>
+<body>
+  <header th:insert="fragments/page_header::pageHeader"></header>
+  <main>
+    <div class="container">
+      <table>
+        <caption>Searched Asset Detail</caption>
+        <thead>
+          <tr>
+            <th id="id_cell">資産ID</th>
+            <th id="categoryName_cell">資産種別</th>
+            <th id="adminName_cell">管理者名</th>
+            <th id="assetName_cell">資産名</th>
+            <th id="remarks_cell">備考</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:object="${asset}">
+            <td class="assetId" th:text="*{id}"></td>
+            <td class="categoryName" th:text="*{category.categoryName}"></td>
+            <td class="adoministratorName" th:text="*{adminName}"></td>
+            <td class="assetName" th:text="*{assetName}"></td>
+            <td class="remarks" th:text="*{remarks}"></td>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</body>
+</html>

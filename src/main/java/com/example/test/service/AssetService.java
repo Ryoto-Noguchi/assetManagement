@@ -50,12 +50,11 @@ public class AssetService {
     /**
      * 資産IDを条件に資産詳細を取得するメソッド
      *
-     * @param assetId 資産ID
+     * @param id 資産ID
      * @return SELECT * FROM mst_asset WHERE asset_id = #{assetId};
      */
-    public List<Asset> findById(int assetId) {
-        return assetRepos.findById(assetId);
-
+    public Asset findById(int id) {
+        return assetRepos.findById(id);
     }
 
     public Page<Asset> findSearchedAndPaginatedPage(SearchForm f, Pageable pageable) {
@@ -63,10 +62,8 @@ public class AssetService {
         Integer categoryId = f.getCategoryId();
         String adminName = f.getAdminName().replaceAll("　", " ").replaceAll("\\s+", " ").trim();
         String assetName = f.getAssetName().replaceAll("　", " ").replaceAll("\\s+", " ").trim();
-        if (id == null) {f.setId(null);}
-        if (categoryId == null) {f.setCategoryId(null);}
-        if (adminName == null) {f.setAdminName(null);}
-        if (assetName == null) {f.setAssetName(null);}
+        if (id == null) {id = 0;}
+        if (categoryId == null) {categoryId = 0;}
         List<Asset> assets = assetRepos.findByIdAndCategoryIdAndAdminNameAndAssetName(id, categoryId, adminName, assetName);
 
         int pageSize = pageable.getPageSize(); // 1ページあたりの表示するレコード数

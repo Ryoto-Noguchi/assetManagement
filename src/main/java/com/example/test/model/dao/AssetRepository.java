@@ -13,13 +13,16 @@ import org.springframework.data.repository.query.Param;
 public interface AssetRepository extends JpaRepository<Asset, Integer> {
 
     Page<Asset> findAll(Pageable pageable);
-    List<Asset> findById(int assetId);
+
+    @Query(value = "SELECT * FROM mst_asset AS a LEFT JOIN mst_category AS c ON a.category_id = c.category_id WHERE a.id = :id", nativeQuery = true)
+    Asset findById(@Param("id") int id);
+
     List<Asset> findAll();
 
-    @Query(value = "SELECT * FROM mst_asset a WHERE a.id = CASE WHEN :id IS NULL THEN :id ELSE a.id END AND a.category_id = CASE WHEN :categoryId IS NULL THEN :categoryId ELSE a.category_id END AND  a.admin_name = CASE WHEN :adminName IS NULL THEN :adminName ELSE a.admin_name END AND  a.asset_name = CASE WHEN :assetName IS NULL THEN :assetName ELSE a.asset_name END", nativeQuery = true)
+    @Query(value = "SELECT * FROM mst_asset WHERE id = CASE WHEN :id = 0 THEN id ELSE :id END AND category_id = CASE WHEN :categoryId = 0 THEN category_id ELSE :categoryId END AND admin_name = CASE WHEN :adminName = '' THEN admin_name ELSE :adminName END AND asset_name = CASE WHEN :assetName = '' THEN asset_name ELSE :assetName END", nativeQuery = true)
 	List<Asset> findByIdAndCategoryIdAndAdminNameAndAssetName(
         @Param("id") Integer id,
         @Param("categoryId")Integer categoryId,
         @Param("adminName") String adminName,
-        @Param("assetName")String assetName);
+        @Param("assetName") String assetName);
 }
