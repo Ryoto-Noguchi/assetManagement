@@ -82,4 +82,8 @@ public class AssetService {
 
     }
 
+	public int getNewAssetId() {
+		return assetRepos.findAllCnt();
+	}
+
 }

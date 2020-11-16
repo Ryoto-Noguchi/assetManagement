@@ -66,8 +66,15 @@ public class IndexController {
     return "index";
   }
 
+  /**
+   * 検索メソッド
+   * @param f
+   * @param page
+   * @param model
+   * @return
+   */
   @RequestMapping(value = "/searchAsset", method = RequestMethod.POST)
-  public String searchAsset(@ModelAttribute("searchForm") SearchForm f, @PathVariable(name = "page") Optional<Integer> page, Model model) {
+  public String search(@ModelAttribute("searchForm") SearchForm f, @PathVariable(name = "page") Optional<Integer> page, Model model) {
     int currentPage = page.orElse(1); // リクエストされたページ
     if (currentPage == 0) {currentPage = 1;} // 先頭ページを表示している際の「<」押下用
     Pageable pageable = PageRequest.of(currentPage - 1, PAGESIZE, SORT);
@@ -76,4 +83,13 @@ public class IndexController {
     return "index";
   }
 
+  @GetMapping("/register")
+  public String goRegister(Model model) {
+    List<Category> categories = categoryService.findAllCategories();
+    model.addAttribute("categories", categories);
+
+    int newId = assetService.getNewAssetId() + 1;
+    model.addAttribute("newId", newId);
+    return "register";
+  }
 }

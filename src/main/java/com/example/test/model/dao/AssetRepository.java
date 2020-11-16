@@ -25,4 +25,8 @@ public interface AssetRepository extends JpaRepository<Asset, Integer> {
         @Param("categoryId")Integer categoryId,
         @Param("adminName") String adminName,
         @Param("assetName") String assetName);
+
+    @Query(value = "SELECT COUNT(*) FROM mst_asset", nativeQuery = true)
+	int findAllCnt();
+
 }

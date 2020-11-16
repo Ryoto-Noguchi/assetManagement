@@ -29,7 +29,7 @@ public class AssetController {
     Asset asset = assetService.findById(id);
     System.out.println(ToStringBuilder.reflectionToString(asset, ToStringStyle.MULTI_LINE_STYLE));
     model.addAttribute("asset", asset);
-    return "asset_detail";
+    return "detail";
   }
 
 }
