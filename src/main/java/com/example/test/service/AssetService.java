@@ -86,4 +86,8 @@ public class AssetService {
 		return assetRepos.findAllCnt();
 	}
 
+	public int insert(Asset newAsset) {
+		return assetRepos.register(newAsset);
+	}
+
 }

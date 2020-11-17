@@ -22,9 +22,6 @@ import lombok.Setter;
 @Setter
 public class Category implements Serializable {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 8346177314583389754L;
 
     @Id

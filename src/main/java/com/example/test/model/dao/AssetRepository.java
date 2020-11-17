@@ -7,6 +7,7 @@ import com.example.test.model.entity.Asset;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -28,5 +29,9 @@ public interface AssetRepository extends JpaRepository<Asset, Integer> {
 
     @Query(value = "SELECT COUNT(*) FROM mst_asset", nativeQuery = true)
 	int findAllCnt();
+
+    @Modifying
+    @Query(value = "INSERT INTO mst_asset (id, category_id, admin_name, asset_name, remarks, serial_id, purchase_date, maker_name, accessory, storing_place) VALUES (:#{#newAsset.id}, :#{#newAsset.categoryId}, :#{#newAsset.adminName}, :#{#newAsset.assetName}, :#{#newAsset.remarks}, :#{#newAsset.serialId}, :#{#newAsset.purchaseDate}, :#{#newAsset.makerName}, :#{#newAsset.accessory}, :#{#newAsset.storingPlace})", nativeQuery = true)
+	int register(@Param("newAsset") Asset newAsset);
 
 }

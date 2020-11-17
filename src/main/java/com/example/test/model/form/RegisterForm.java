@@ -8,8 +8,7 @@ import lombok.Setter;
 public class RegisterForm {
   private Integer id;
   private Integer categoryId;
-  private String categoryName;
-  private String adminiName;
+  private String adminName;
   private String assetName;
   private String remarks;
   private String serialId;
