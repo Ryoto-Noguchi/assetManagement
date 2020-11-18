@@ -22,7 +22,7 @@ public class RegisterController {
     int count = assetService.insert(newAsset);
     System.out.println(count + "件更新しました");
     model.addAttribute("count", count);
-    return "register";
+    return "redirect:/index/";
   }
 
 }
