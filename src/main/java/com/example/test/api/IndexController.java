@@ -21,9 +21,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 // import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/index")
@@ -91,5 +93,12 @@ public class IndexController {
     int newId = assetService.getNewAssetId() + 1;
     model.addAttribute("newId", newId);
     return "register";
+  }
+
+  @PostMapping("/modify")
+  public String goModdify(@RequestParam("id") int id, Model model) {
+    Asset asset = assetService.findById(id);
+    model.addAttribute("asset", asset);
+    return "modify";
   }
 }

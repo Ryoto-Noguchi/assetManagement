@@ -1,35 +1,99 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Asset Management</title>
-</head>
-<body>
-  <header th:insert="fragments/page_header::pageHeader"></header>
-  <main>
-    <div class="container">
-      <table>
-        <caption>Searched Asset Detail</caption>
-        <thead>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asset Management</title>
+  </head>
+  <style>
+    table {
+      border: 1px solid black;
+      border-collapse: collapse;
+      text-align: center;
+    }
+
+    table th,
+    table td,
+    table tr {
+      border: solid 1px black;
+    }
+
+    .form-box {
+      display: flex;
+    }
+
+    .form-box form {
+      margin: 0.5rem;
+    }
+  </style>
+  <body>
+    <header th:insert="fragments/page_header::pageHeader"></header>
+    <main>
+      <div class="container">
+        <table th:object="${asset}">
+          <caption>
+            Searched Asset Detail
+          </caption>
           <tr>
-            <th id="id_cell">資産ID</th>
-            <th id="categoryName_cell">資産種別</th>
-            <th id="adminName_cell">管理者名</th>
-            <th id="assetName_cell">資産名</th>
-            <th id="remarks_cell">備考</th>
+            <th class="table-column">項目名</th>
+            <th class="table-column">内容</th>
           </tr>
-        </thead>
-        <tbody>
-          <tr th:object="${asset}">
-            <td class="assetId" th:text="*{id}"></td>
-            <td class="categoryName" th:text="*{category.categoryName}"></td>
-            <td class="adoministratorName" th:text="*{adminName}"></td>
-            <td class="assetName" th:text="*{assetName}"></td>
-            <td class="remarks" th:text="*{remarks}"></td>
-        </tbody>
-      </table>
-    </div>
-  </main>
-</body>
+          <tr>
+            <th class="column">資産ID</th>
+            <td class="column" th:text="*{id}"></td>
+          </tr>
+          <tr>
+            <th class="table-column">資産種別</th>
+            <td class="table-column" th:text="*{category.categoryName}"></td>
+          </tr>
+          <tr>
+            <th class="table-column">管理者</th>
+            <td class="table-column" th:text="*{adminName}"></td>
+          </tr>
+          <tr>
+            <th class="table-column">資産名</th>
+            <td class="table-column" th:text="*{assetName}"></td>
+          </tr>
+          <tr>
+            <th class="table-column">備考</th>
+            <td class="table-column" th:text="*{remarks}"></td>
+          </tr>
+          <tr>
+            <th class="table-column">シリアルID</th>
+            <td class="table-column" th:text="*{serialId}"></td>
+          </tr>
+          <tr>
+            <th class="table-column">購入年月日</th>
+            <td class="table-column" th:text="*{purchaseDate}"></td>
+          </tr>
+          <tr>
+            <th class="table-column">メーカー名</th>
+            <td class="table-column" th:text="*{makerName}"></td>
+          </tr>
+          <tr>
+            <th class="table-column">付属品</th>
+            <td class="table-column" th:text="*{accessory}"></td>
+          </tr>
+          <tr>
+            <th class="table-column">保管場所</th>
+            <td class="table-column" th:text="*{storingPlace}"></td>
+          </tr>
+        </table>
+        <div class="form-box">
+          <form th:action="@{/index/modify/}" method="POST">
+            <input type="hidden" name="id" th:value="*{id}" />
+            <button class="btn" type="submit">修正</button>
+          </form>
+          <form th:action="@{/index/delete/}" method="POST">
+            <input type="hidden" name="id" th:value="*{id}" />
+            <button class="btn" type="submit">削除</button>
+          </form>
+          <form th:action="@{/index/print/}" method="POST">
+            <input type="hidden" name="id" th:value="*{id}" />
+            <button class="btn" type="submit">印刷</button>
+          </form>
+        </div>
+      </div>
+    </main>
+  </body>
 </html>

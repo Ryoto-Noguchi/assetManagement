@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>training</title>
   </head>
+  <style>
+    table {
+      border: solid black 1px;
+    }
+  </style>
   <body>
     <header th:insert="fragments/page_header::pageHeader"></header>
     <main>
@@ -120,8 +125,8 @@
               </tr>
             </tbody>
           </table>
-          <button type="submit" id="registerBtn">登録する</button>
-          <button type="button" onclick="history.back()" class="button">戻る</button>
+          <button type="submit" class="btn">登録する</button>
+          <button type="button" onclick="history.back()" class="btn">戻る</button>
         </form>
       </div>
     </main>

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/index/detail")
-public class AssetController {
+public class DetailController {
 
   @Autowired
   AssetService assetService;

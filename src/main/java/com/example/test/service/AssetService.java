@@ -40,7 +40,8 @@ public class AssetService {
             list = Collections.emptyList(); // 変数listを空のまま不変にする
         } else {
             int toIndex = Math.min(startItem + pageSize, assets.size()); // 「現在表示しているページの1番上のレコード」＋「10」と「全レコード数」の小さい方をtoIndexとする
-            list = assets.subList(startItem, toIndex); // 「現在表示しているページの1番上のレコード」からtoIndexまでのレコード数 = リクエストされたページで表示したいレコード数
+            list = assets.subList(startItem, toIndex); // 「現在表示しているページの1番上のレコード」からtoIndexまでのレコード数 =
+                                                       // リクエストされたページで表示したいレコード数
         }
 
         Page<Asset> assetList = new PageImpl<Asset>(list, pageable, assets.size()); // リクエストされたページに合致するレコード情報
@@ -62,9 +63,14 @@ public class AssetService {
         Integer categoryId = f.getCategoryId();
         String adminName = f.getAdminName().replaceAll("　", " ").replaceAll("\\s+", " ").trim();
         String assetName = f.getAssetName().replaceAll("　", " ").replaceAll("\\s+", " ").trim();
-        if (id == null) {id = 0;}
-        if (categoryId == null) {categoryId = 0;}
-        List<Asset> assets = assetRepos.findByIdAndCategoryIdAndAdminNameAndAssetName(id, categoryId, adminName, assetName);
+        if (id == null) {
+            id = 0;
+        }
+        if (categoryId == null) {
+            categoryId = 0;
+        }
+        List<Asset> assets = assetRepos.findByIdAndCategoryIdAndAdminNameAndAssetName(id, categoryId, adminName,
+                assetName);
 
         int pageSize = pageable.getPageSize(); // 1ページあたりの表示するレコード数
         int currentPage = pageable.getPageNumber(); // 現在のページ
@@ -74,7 +80,8 @@ public class AssetService {
             list = Collections.emptyList(); // 変数listを空のまま不変にする
         } else {
             int toIndex = Math.min(startItem + pageSize, assets.size()); // 「現在表示しているページの1番上のレコード」＋「10」と「全レコード数」の小さい方をtoIndexとする
-            list = assets.subList(startItem, toIndex); // 「現在表示しているページの1番上のレコード」からtoIndexまでのレコード数 = リクエストされたページで表示したいレコード数
+            list = assets.subList(startItem, toIndex); // 「現在表示しているページの1番上のレコード」からtoIndexまでのレコード数 =
+                                                       // リクエストされたページで表示したいレコード数
         }
 
         Page<Asset> assetList = new PageImpl<Asset>(list, pageable, assets.size()); // リクエストされたページに合致するレコード情報
@@ -82,12 +89,12 @@ public class AssetService {
 
     }
 
-	public int getNewAssetId() {
-		return assetRepos.findAllCnt();
-	}
+    public int getNewAssetId() {
+        return assetRepos.findAllCnt();
+    }
 
-	public int insert(Asset newAsset) {
-		return assetRepos.register(newAsset);
-	}
+    public int insert(Asset newAsset) {
+        return assetRepos.register(newAsset);
+    }
 
 }
