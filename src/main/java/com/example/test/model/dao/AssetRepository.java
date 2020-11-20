@@ -34,4 +34,8 @@ public interface AssetRepository extends JpaRepository<Asset, Integer> {
     @Query(value = "INSERT INTO mst_asset (id, category_id, admin_name, asset_name, remarks, serial_id, purchase_date, maker_name, accessory, storing_place) VALUES (:#{#newAsset.id}, :#{#newAsset.categoryId}, :#{#newAsset.adminName}, :#{#newAsset.assetName}, :#{#newAsset.remarks}, :#{#newAsset.serialId}, :#{#newAsset.purchaseDate}, :#{#newAsset.makerName}, :#{#newAsset.accessory}, :#{#newAsset.storingPlace})", nativeQuery = true)
 	int register(@Param("newAsset") Asset newAsset);
 
+    @Modifying
+    @Query(value = "UPDATE mst_asset SET category_id = :#{#newAsset.categoryId}, admin_name = :#{#newAsset.adminName}, asset_name = :#{#newAsset.assetName}, remarks = :#{#newAsset.remarks}, serial_id = :#{#newAsset.serialId}, purchase_date = :#{#newAsset.purchaseDate}, maker_name = :#{#newAsset.makerName}, accessory = :#{#newAsset.accessory}, storing_place = :#{#newAsset.storingPlace} WHERE id = :#{#newAsset.id}", nativeQuery = true)
+	int update(@Param("newAsset") Asset newAsset);
+
 }

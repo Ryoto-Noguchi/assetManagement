@@ -87,9 +87,8 @@ public class IndexController {
 
   @GetMapping("/register")
   public String goRegister(Model model) {
-    List<Category> categories = categoryService.findAllCategories();
-    model.addAttribute("categories", categories);
-
+    List<Category> categoryList = categoryService.findAllCategories();
+    model.addAttribute("categoryList", categoryList);
     int newId = assetService.getNewAssetId() + 1;
     model.addAttribute("newId", newId);
     return "register";
@@ -97,8 +96,10 @@ public class IndexController {
 
   @PostMapping("/modify")
   public String goModdify(@RequestParam("id") int id, Model model) {
+    List<Category> categoryList = categoryService.findAllCategories();
     Asset asset = assetService.findById(id);
     model.addAttribute("asset", asset);
+    model.addAttribute("categoryList", categoryList);
     return "modify";
   }
 }

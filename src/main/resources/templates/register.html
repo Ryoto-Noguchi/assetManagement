@@ -42,9 +42,9 @@
                 <th id="category_cell">資産種別</th>
                 <th id="category_input_cell">
                   <select name="categoryId" id="categoryId_input">
-                    <option value="0">資産種別を選んで下さい</option>
+                    <option disabled value="0">資産種別を選んで下さい</option>
                     <option
-                      th:each="category:${categories}"
+                      th:each="category:${categoryList}"
                       th:value="${category.categoryId}"
                       th:text="${category.categoryName}"
                     ></option>

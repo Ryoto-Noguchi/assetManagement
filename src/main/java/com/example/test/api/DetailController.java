@@ -32,4 +32,11 @@ public class DetailController {
     return "detail";
   }
 
+  // @PostMapping("/")
+  // public String goDetail(@RequestParam("id") int id, Model model) {
+  //   Asset asset = assetService.findById(id);
+  //   model.addAttribute("asset", asset);
+  //   return "detail";
+  // }
+
 }

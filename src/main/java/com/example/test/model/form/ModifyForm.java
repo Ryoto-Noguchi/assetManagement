@@ -1,0 +1,19 @@
+package com.example.test.model.form;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class ModifyForm {
+  private Integer id;
+  private Integer categoryId;
+  private String adminName;
+  private String assetName;
+  private String remarks;
+  private String serialId;
+  private String purchaseDate;
+  private String makerName;
+  private String accessory;
+  private String storingPlace;
+}

@@ -97,4 +97,8 @@ public class AssetService {
         return assetRepos.register(newAsset);
     }
 
+	public int update(Asset newAsset) {
+		return assetRepos.update(newAsset);
+	}
+
 }
