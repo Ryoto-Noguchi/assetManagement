@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-// import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -86,6 +85,19 @@ public class IndexController {
   }
 
   /**
+   * 詳細画面に遷移するメソッド
+   * @param id
+   * @param model
+   * @return
+   */
+  @GetMapping("/detail/{id}")
+  public String goDetail(@PathVariable("id") int id , Model model) {
+    Asset asset = assetService.findById(id);
+    model.addAttribute("asset", asset);
+    return "detail";
+  }
+
+  /**
    * 登録画面へ遷移するメソッド
    * @param model
    * @return
@@ -103,7 +115,7 @@ public class IndexController {
    * 修正画面へ遷移するメソッド
    * @param id
    * @param model
-   * @return 
+   * @return
    */
   @PostMapping("/modify")
   public String goModdify(@RequestParam("id") int id, Model model) {

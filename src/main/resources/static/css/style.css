@@ -14,7 +14,7 @@ ul.pagination {
   display: flex;
   list-style-type: none;
   justify-content: space-around;
-  width: 50%;;
+  width: 50%;
 }
 
 table.top {
@@ -26,3 +26,4 @@ nav {
   display: flex;
   justify-content: center;
 }
+

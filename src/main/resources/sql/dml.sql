@@ -45,3 +45,4 @@ WHERE a.id = CASE WHEN :id IS NULL THEN a.id ELSE :id END
 AND a.category_id = CASE WHEN :categoryId IS NULL THEN a.category_id ELSE :categoryId END
 AND  a.admin_name = CASE WHEN :adminName IS NULL THEN a.admin_name ELSE :adminName END
 AND  a.asset_name = CASE WHEN :assetName IS NULL THEN a.asset_name ELSE :assetName END
+

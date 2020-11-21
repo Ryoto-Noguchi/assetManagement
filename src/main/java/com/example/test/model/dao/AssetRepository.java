@@ -20,7 +20,7 @@ public interface AssetRepository extends JpaRepository<Asset, Integer> {
 
     List<Asset> findAllByIdInAndDeleteFlagFalseOrderByIdAsc(List<Integer> ids);
 
-    @Query(value = "SELECT * FROM mst_asset WHERE id = CASE WHEN :id = 0 THEN id ELSE :id END AND category_id = CASE WHEN :categoryId = 0 THEN category_id ELSE :categoryId END AND admin_name LIKE concat('%', CASE WHEN :adminName = '' THEN admin_name ELSE :adminName END, '%') AND asset_name LIKE concat('%', CASE WHEN :assetName = '' THEN asset_name ELSE :assetName END, '%')", nativeQuery = true)
+    @Query(value = "SELECT * FROM mst_asset WHERE id = CASE WHEN :id = 0 THEN id ELSE :id END AND category_id = CASE WHEN :categoryId = 0 THEN category_id ELSE :categoryId END AND admin_name LIKE concat('%', CASE WHEN :adminName = '' THEN admin_name ELSE :adminName END, '%') AND asset_name LIKE concat('%', CASE WHEN :assetName = '' THEN asset_name ELSE :assetName END, '%') AND delete_flag = false ORDER BY id ASC", nativeQuery = true)
 	List<Asset> findByIdAndCategoryIdAndAdminNameAndAssetName(
         @Param("id") Integer id,
         @Param("categoryId")Integer categoryId,

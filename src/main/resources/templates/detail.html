@@ -11,19 +11,16 @@
       border-collapse: collapse;
       text-align: center;
     }
-
     table th,
     table td,
     table tr {
       border: solid 1px black;
     }
-
     .form-box {
       display: flex;
     }
-
-    .form-box form {
-      margin: 0.5rem;
+    .btn {
+      margin: .5rem;
     }
   </style>
   <body>
@@ -80,18 +77,15 @@
           </tr>
         </table>
         <div class="form-box">
-          <form th:action="@{/index/modify/}" method="POST">
+          <form th:action="@{/index/modify}" method="POST">
             <input type="hidden" name="id" th:value="*{id}" />
             <button class="btn" type="submit">修正</button>
           </form>
-          <form th:action="@{/delete}" method="POST">
+          <form th:action="@{asset/delete}" method="POST">
             <input type="hidden" name="id" th:value="*{id}" />
             <button class="btn" type="submit">削除</button>
           </form>
-          <form th:action="@{/index/print/}" method="POST">
-            <input type="hidden" name="id" th:value="*{id}" />
-            <button class="btn" type="submit">印刷</button>
-          </form>
+          <button class="btn" type="button" onclick="window.print();">印刷</button>
         </div>
       </div>
     </main>

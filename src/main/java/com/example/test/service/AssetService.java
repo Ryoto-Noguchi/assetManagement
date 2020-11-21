@@ -38,7 +38,7 @@ public class AssetService {
 
         int assetCnt = assetRepos.findAllCnt(); // 全資産数を取得し
         List<Integer> ids = new ArrayList<>(); // ArrayListをnewして、for文を回すことでfindAllByIdOrderByIdAscの引数に使うList<Integer>型のidsを用意
-        for (int i = 0; i < assetCnt; i++) {
+        for (int i = 0; i < assetCnt + 1; i++) {
             ids.add(i);
         }
         List<Asset> assets = assetRepos.findAllByIdInAndDeleteFlagFalseOrderByIdAsc(ids); // findAllByIdOrderByIdAsc(ids)だと「Operator SIMPLE_PROPERTY on ids requires a scalar argument」というエラーが出る。どうやら、引数メソッド名からクエリを自動生成する場合には、引数がリストや複数である場合はBy~~の後に「In」をつける必要があるみたい
@@ -46,8 +46,7 @@ public class AssetService {
             list = Collections.emptyList(); // 変数listを空のまま不変にする
         } else {
             int toIndex = Math.min(startItem + pageSize, assets.size()); // 「現在表示しているページの1番上のレコード」＋「10」と「全レコード数」の小さい方をtoIndexとする
-            list = assets.subList(startItem, toIndex); // 「現在表示しているページの1番上のレコード」からtoIndexまでのレコード数 =
-                                                       // リクエストされたページで表示したいレコード数
+            list = assets.subList(startItem, toIndex); // 「現在表示しているページの1番上のレコード」からtoIndexまでのレコード数 = リクエストされたページで表示したいレコード数
         }
 
         Page<Asset> assetList = new PageImpl<Asset>(list, pageable, assets.size()); // リクエストされたページに合致するレコード情報
@@ -85,8 +84,7 @@ public class AssetService {
             list = Collections.emptyList(); // 変数listを空のまま不変にする
         } else {
             int toIndex = Math.min(startItem + pageSize, assets.size()); // 「現在表示しているページの1番上のレコード」＋「10」と「全レコード数」の小さい方をtoIndexとする
-            list = assets.subList(startItem, toIndex); // 「現在表示しているページの1番上のレコード」からtoIndexまでのレコード数 =
-                                                       // リクエストされたページで表示したいレコード数
+            list = assets.subList(startItem, toIndex); // 「現在表示しているページの1番上のレコード」からtoIndexまでのレコード数 = リクエストされたページで表示したいレコード数
         }
 
         Page<Asset> assetList = new PageImpl<Asset>(list, pageable, assets.size()); // リクエストされたページに合致するレコード情報
