@@ -19,7 +19,7 @@ public class RegisterController {
   public String register(@ModelAttribute("registerForm") RegisterForm form) {
     Asset newAsset = new Asset(form);
     int count = assetService.insert(newAsset);
-    System.out.println(count + "件更新しました");
+    System.out.println(count + "件登録しました");
     return "redirect:/index/";
   }
 

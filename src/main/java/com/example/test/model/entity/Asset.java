@@ -57,6 +57,9 @@ public class Asset implements Serializable {
     @Column(name = "storing_place")
     private String storingPlace;
 
+    @Column(name = "delete_flag")
+    private boolean deleteFlag;
+
     @ManyToOne
     @JoinColumn(name = "category_id", insertable = false, updatable = false)
     private Category category;

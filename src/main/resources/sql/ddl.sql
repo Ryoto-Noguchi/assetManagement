@@ -12,6 +12,7 @@ CREATE TABLE mst_asset (
     maker_name VARCHAR(255),
     accessory VARCHAR(255),
     storing_place VARCHAR(255),
+    delte_flag BOOLEAN NOT NULL DEFAULT 'FALSE',
     FOREIGN KEY (category_id) REFERENCES mst_category (category_id)
 );
 
@@ -22,7 +23,11 @@ CREATE TABLE mst_category (
 
 
 SELECT * FROM mst_category;
-SELECT * FROM mst_asset;
+SELECT admin_name, delete_flag FROM mst_asset ORDER BY id;
 
 DROP TABLE mst_asset;
 DROP TABLE category;
+
+ALTER TABLE mst_asset ADD delete_flag BOOLEAN DEFAULT 'FALSE';
+
+UPDATE mst_asset SET delete_flag = false WHERE id = 1;

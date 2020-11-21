@@ -75,7 +75,7 @@ public class IndexController {
    * @param model
    * @return
    */
-  @RequestMapping(value = "/searchAsset", method = RequestMethod.POST)
+  @RequestMapping(value = "/search", method = RequestMethod.POST)
   public String search(@ModelAttribute("searchForm") SearchForm f, @PathVariable(name = "page") Optional<Integer> page, Model model) {
     int currentPage = page.orElse(1); // リクエストされたページ
     if (currentPage == 0) {currentPage = 1;} // 先頭ページを表示している際の「<」押下用
@@ -85,6 +85,11 @@ public class IndexController {
     return "index";
   }
 
+  /**
+   * 登録画面へ遷移するメソッド
+   * @param model
+   * @return
+   */
   @GetMapping("/register")
   public String goRegister(Model model) {
     List<Category> categoryList = categoryService.findAllCategories();
@@ -94,6 +99,12 @@ public class IndexController {
     return "register";
   }
 
+  /**
+   * 修正画面へ遷移するメソッド
+   * @param id
+   * @param model
+   * @return 
+   */
   @PostMapping("/modify")
   public String goModdify(@RequestParam("id") int id, Model model) {
     List<Category> categoryList = categoryService.findAllCategories();

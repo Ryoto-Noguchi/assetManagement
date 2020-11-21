@@ -14,7 +14,7 @@
             <a th:href="@{/index/register}" id="register-link">資産登録</a>
           </h2>
         </div>
-        <form th:action="@{/index/searchAsset}" th:object="${searchForm}" method="POST" name="searchForm" id="searchForm">
+        <form th:action="@{/index/search}" th:object="${searchForm}" method="POST" name="searchForm" id="searchForm">
           <!-- 資産ID検索窓 -->
           <label for="id">資産ID</label>
           <input type="text" name="id" id="id" th:value="${id}"/>
