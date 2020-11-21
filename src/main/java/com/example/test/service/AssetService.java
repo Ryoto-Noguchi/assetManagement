@@ -1,5 +1,6 @@
 package com.example.test.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,7 +36,12 @@ public class AssetService {
         int startItem = pageSize * currentPage; // 現在表示しているページの1番上のレコード
         List<Asset> list = null; // Asset型の変数をnullで初期化して保持
 
-        List<Asset> assets = assetRepos.findAll();
+        int assetCnt = assetRepos.findAllCnt(); // 全資産数を取得し
+        List<Integer> ids = new ArrayList<>(); // ArrayListをnewして、for文を回すことでfindAllByIdOrderByIdAscの引数に使うList<Integer>型のidsを用意
+        for (int i = 0; i < assetCnt; i++) {
+            ids.add(i);
+        }
+        List<Asset> assets = assetRepos.findAllByIdInOrderByIdAsc(ids); // findAllByIdOrderByIdAsc(ids)だと「Operator SIMPLE_PROPERTY on ids requires a scalar argument」というエラーが出る。どうやら、引数メソッド名からクエリを自動生成する場合には、引数がリストや複数である場合はBy~~の後に「In」をつける必要があるみたい
         if (assets.size() < startItem) { // ???
             list = Collections.emptyList(); // 変数listを空のまま不変にする
         } else {

@@ -18,7 +18,7 @@ public interface AssetRepository extends JpaRepository<Asset, Integer> {
     @Query(value = "SELECT * FROM mst_asset AS a LEFT JOIN mst_category AS c ON a.category_id = c.category_id WHERE a.id = :id", nativeQuery = true)
     Asset findById(@Param("id") int id);
 
-    List<Asset> findAll();
+    List<Asset> findAllByIdInOrderByIdAsc(List<Integer> ids);
 
     @Query(value = "SELECT * FROM mst_asset WHERE id = CASE WHEN :id = 0 THEN id ELSE :id END AND category_id = CASE WHEN :categoryId = 0 THEN category_id ELSE :categoryId END AND admin_name LIKE concat('%', CASE WHEN :adminName = '' THEN admin_name ELSE :adminName END, '%') AND asset_name LIKE concat('%', CASE WHEN :assetName = '' THEN asset_name ELSE :assetName END, '%')", nativeQuery = true)
 	List<Asset> findByIdAndCategoryIdAndAdminNameAndAssetName(
