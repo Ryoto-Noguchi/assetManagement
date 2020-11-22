@@ -62,7 +62,6 @@ public class AssetController {
       + "; charset=UTF-8; Content-Disposition: attachment")
   @ResponseBody
   public Object csvDownload(@ModelAttribute("csvForm") CSV records) throws JsonProcessingException {
-    // TODO CSVを通常の表通りに並べ直す処理
     List<CsvColumn> csvList = new ArrayList<>();
     for (int i = 0; i < records.getId().size(); i++) {
       csvList.add(new CsvColumn(records.getId().get(i), records.getCategoryId().get(i), records.getAdminName().get(i), records.getAssetName().get(i), records.getRemarks().get(i)));
