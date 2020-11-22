@@ -13,6 +13,8 @@ import javax.persistence.Table;
 
 import com.example.test.model.form.ModifyForm;
 import com.example.test.model.form.RegisterForm;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -21,42 +23,54 @@ import lombok.Setter;
 @Table(name = "mst_asset")
 @Getter
 @Setter
+@JsonPropertyOrder({"資産ID", "資産種別","管理者名", "資産名", "備考"})
 public class Asset implements Serializable {
 
     private static final long serialVersionUID = -2542507546380589599L;
 
+    @JsonProperty("資産ID")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
+    @JsonProperty("資産種別")
     @Column(name = "category_id")
     private Integer categoryId;
 
+    @JsonProperty("管理者名")
     @Column(name = "admin_name")
     private String adminName;
 
+    @JsonProperty("資産名")
     @Column(name = "asset_name")
     private String assetName;
 
+    @JsonProperty("備考")
     @Column(name = "remarks")
     private String remarks;
 
+    @JsonProperty("シリアルID")
     @Column(name = "serial_id")
     private String serialId;
 
+    @JsonProperty("購入年月日")
     @Column(name = "purchase_date")
     private String purchaseDate;
 
+    @JsonProperty("メーカー名")
     @Column(name = "maker_name")
     private String makerName;
 
+    @JsonProperty("付属品")
     @Column(name = "accessory")
     private String accessory;
 
+    @JsonProperty("保管場所")
     @Column(name = "storing_place")
     private String storingPlace;
 
+    @JsonProperty("削除フラグ")
     @Column(name = "delete_flag")
     private boolean deleteFlag;
 

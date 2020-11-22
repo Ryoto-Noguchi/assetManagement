@@ -81,7 +81,7 @@
             <input type="hidden" name="id" th:value="*{id}" />
             <button class="btn" type="submit">修正</button>
           </form>
-          <form th:action="@{asset/delete}" method="POST">
+          <form th:action="@{/asset/delete}" method="POST">
             <input type="hidden" name="id" th:value="*{id}" />
             <button class="btn" type="submit">削除</button>
           </form>

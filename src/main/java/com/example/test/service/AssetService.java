@@ -41,12 +41,16 @@ public class AssetService {
         for (int i = 0; i < assetCnt + 1; i++) {
             ids.add(i);
         }
-        List<Asset> assets = assetRepos.findAllByIdInAndDeleteFlagFalseOrderByIdAsc(ids); // findAllByIdOrderByIdAsc(ids)だと「Operator SIMPLE_PROPERTY on ids requires a scalar argument」というエラーが出る。どうやら、引数メソッド名からクエリを自動生成する場合には、引数がリストや複数である場合はBy~~の後に「In」をつける必要があるみたい
+        List<Asset> assets = assetRepos.findAllByIdInAndDeleteFlagFalseOrderByIdAsc(ids); // findAllByIdOrderByIdAsc(ids)だと「Operator
+                                                                                          // SIMPLE_PROPERTY on ids
+                                                                                          // requires a scalar
+                                                                                          // argument」というエラーが出る。どうやら、引数メソッド名からクエリを自動生成する場合には、引数がリストや複数である場合はBy~~の後に「In」をつける必要があるみたい
         if (assets.size() < startItem) { // ???
             list = Collections.emptyList(); // 変数listを空のまま不変にする
         } else {
             int toIndex = Math.min(startItem + pageSize, assets.size()); // 「現在表示しているページの1番上のレコード」＋「10」と「全レコード数」の小さい方をtoIndexとする
-            list = assets.subList(startItem, toIndex); // 「現在表示しているページの1番上のレコード」からtoIndexまでのレコード数 = リクエストされたページで表示したいレコード数
+            list = assets.subList(startItem, toIndex); // 「現在表示しているページの1番上のレコード」からtoIndexまでのレコード数 =
+                                                       // リクエストされたページで表示したいレコード数
         }
 
         Page<Asset> assetList = new PageImpl<Asset>(list, pageable, assets.size()); // リクエストされたページに合致するレコード情報
@@ -55,6 +59,7 @@ public class AssetService {
 
     /**
      * 資産IDを条件に資産詳細を取得するメソッド
+     *
      * @param id 資産ID
      * @return SELECT * FROM mst_asset WHERE asset_id = #{assetId};
      */
@@ -84,7 +89,8 @@ public class AssetService {
             list = Collections.emptyList(); // 変数listを空のまま不変にする
         } else {
             int toIndex = Math.min(startItem + pageSize, assets.size()); // 「現在表示しているページの1番上のレコード」＋「10」と「全レコード数」の小さい方をtoIndexとする
-            list = assets.subList(startItem, toIndex); // 「現在表示しているページの1番上のレコード」からtoIndexまでのレコード数 = リクエストされたページで表示したいレコード数
+            list = assets.subList(startItem, toIndex); // 「現在表示しているページの1番上のレコード」からtoIndexまでのレコード数 =
+                                                       // リクエストされたページで表示したいレコード数
         }
 
         Page<Asset> assetList = new PageImpl<Asset>(list, pageable, assets.size()); // リクエストされたページに合致するレコード情報
@@ -93,9 +99,10 @@ public class AssetService {
     }
 
     /**
-     *レコード数取得をするメソッド
-     *@param なし
-     *@return レコード数
+     * レコード数取得をするメソッド
+     *
+     * @param なし
+     * @return レコード数
      */
     public int getNewAssetId() {
         return assetRepos.findAllCnt();
@@ -103,6 +110,7 @@ public class AssetService {
 
     /**
      * 登録をするメソッド
+     *
      * @param newAsset
      * @return 更新件数
      */
@@ -112,19 +120,32 @@ public class AssetService {
 
     /**
      * 更新するメソッド
+     *
      * @param newAsset
      * @return 更新件数
      */
-	public int update(Asset newAsset) {
-		return assetRepos.update(newAsset);
-	}
+    public int update(Asset newAsset) {
+        return assetRepos.update(newAsset);
+    }
 
     /**
      * 論理削除メソッド
+     *
      * @param id
      * @return
      */
     public int logicalDeleteById(int id) {
         return assetRepos.logicalDeleteById(id);
     }
+
+    // public Object csvDownload(CsvForm form) throws JsonProcessingException {
+
+
+
+    //     CsvMapper mapper = new CsvMapper();
+    //     CsvSchema schema = mapper.schemaFor(Asset.class).withHeader();
+    //     return mapper.writer(schema).writeValueAsString(csv);
+    // }
+
+
 }
