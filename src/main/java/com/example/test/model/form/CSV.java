@@ -26,9 +26,4 @@ public class CSV {
   @JsonProperty("備考")
   List<String> remarks;
 
-  // public CSV () {}
-
-  // public CSV (CSV records) {
-
-  // }
 }

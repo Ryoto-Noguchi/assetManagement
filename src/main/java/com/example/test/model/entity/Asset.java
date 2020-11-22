@@ -23,7 +23,7 @@ import lombok.Setter;
 @Table(name = "mst_asset")
 @Getter
 @Setter
-@JsonPropertyOrder({"資産ID", "資産種別","管理者名", "資産名", "備考"})
+@JsonPropertyOrder({"資産ID", "資産種別","管理者名", "資産名", "備考", "シリアルID", "購入年月日", "メーカー名", "付属品", "保管場所", "削除フラグ", "資産種別名&ID"})
 public class Asset implements Serializable {
 
     private static final long serialVersionUID = -2542507546380589599L;
@@ -74,6 +74,7 @@ public class Asset implements Serializable {
     @Column(name = "delete_flag")
     private boolean deleteFlag;
 
+    @JsonProperty("資産種別名&ID")
     @ManyToOne
     @JoinColumn(name = "category_id", insertable = false, updatable = false)
     private Category category;
@@ -104,6 +105,14 @@ public class Asset implements Serializable {
         this.makerName = f.getMakerName();
         this.accessory = f.getAccessory();
         this.storingPlace = f.getStoringPlace();
+    }
+
+    public Asset(Integer id, Integer categoryId, String adminName, String assetName, String remarks) {
+        this.id = id;
+        this.categoryId = categoryId;
+        this.adminName = adminName;
+        this.assetName = assetName;
+        this.remarks = remarks;
     }
 
 }

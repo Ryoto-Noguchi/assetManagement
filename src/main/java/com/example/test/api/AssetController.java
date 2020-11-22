@@ -1,14 +1,11 @@
 package com.example.test.api;
 
-// import java.util.ArrayList;
-// import java.util.List;
-
-// import java.util.ArrayList;
-// import java.util.Arrays;
-// import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.example.test.model.entity.Asset;
 import com.example.test.model.form.CSV;
+import com.example.test.model.form.CsvColumn;
 import com.example.test.model.form.ModifyForm;
 import com.example.test.model.form.RegisterForm;
 import com.example.test.service.AssetService;
@@ -66,9 +63,13 @@ public class AssetController {
   @ResponseBody
   public Object csvDownload(@ModelAttribute("csvForm") CSV records) throws JsonProcessingException {
     // TODO CSVを通常の表通りに並べ直す処理
+    List<CsvColumn> csvList = new ArrayList<>();
+    for (int i = 0; i < records.getId().size(); i++) {
+      csvList.add(new CsvColumn(records.getId().get(i), records.getCategoryId().get(i), records.getAdminName().get(i), records.getAssetName().get(i), records.getRemarks().get(i)));
+    }
     CsvMapper mapper = new CsvMapper();
-    CsvSchema schema = mapper.schemaFor(CSV.class).withHeader();
-    return mapper.writer(schema).writeValueAsString(records);
+    CsvSchema schema = mapper.schemaFor(CsvColumn.class).withHeader();
+    return mapper.writer(schema).writeValueAsString(csvList);
   }
 
 }
