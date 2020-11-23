@@ -81,6 +81,12 @@ public class IndexController {
     Pageable pageable = PageRequest.of(currentPage - 1, PAGESIZE, SORT);
     Page<Asset> assetPage = assetService.findSearchedAndPaginatedPage(f, pageable);
     model.addAttribute("assetPage", assetPage);
+    model.addAttribute("adminName", assetService.adminNameShape(f.getAdminName()));
+    model.addAttribute("assetName", assetService.assetNameShape(f.getAssetName()));
+    model.addAttribute("id", f.getId());
+    model.addAttribute("selected", f.getCategoryId());
+    List<Category> categoryList = categoryService.findAllCategories();
+    model.addAttribute("categoryList", categoryList);
     return "index";
   }
 

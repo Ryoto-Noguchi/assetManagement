@@ -21,10 +21,10 @@
           <!-- カテゴリ選択窓 -->
           <label for="categoryId">資産種別</label>
           <select name="categoryId" id="categoryId">
-            <option value="">資産種別を選んで下さい</option>
+            <option disabled selected value="">資産種別を選んで下さい</option>
             <option
               th:each="category:${categoryList}"
-              th:selected="${selected == category.categoryId}"
+              th:selected="${category.categoryId == selected}"
               th:value="${category.categoryId}"
               th:text="${category.categoryName}"
             ></option>

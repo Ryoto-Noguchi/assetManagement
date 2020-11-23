@@ -67,11 +67,22 @@ public class AssetService {
         return assetRepos.findById(id);
     }
 
+    public String adminNameShape(String adminName) {
+        return adminName = adminName.replaceAll("　", " ").replaceAll("\\s+", " ").trim();
+    }
+
+    public String assetNameShape(String assetName) {
+        return assetName = assetName.replaceAll("　", " ").replaceAll("\\s+", " ").trim();
+    }
+
     public Page<Asset> findSearchedAndPaginatedPage(SearchForm f, Pageable pageable) {
         Integer id = f.getId();
         Integer categoryId = f.getCategoryId();
-        String adminName = f.getAdminName().replaceAll("　", " ").replaceAll("\\s+", " ").trim();
-        String assetName = f.getAssetName().replaceAll("　", " ").replaceAll("\\s+", " ").trim();
+        String adminName = adminNameShape(f.getAdminName());
+        String assetName = assetNameShape(f.getAssetName());
+
+        // String adminName = f.getAdminName().replaceAll("　", " ").replaceAll("\\s+", " ").trim();
+        // String assetName = f.getAssetName().replaceAll("　", " ").replaceAll("\\s+", " ").trim();
         if (id == null) {
             id = 0;
         }
