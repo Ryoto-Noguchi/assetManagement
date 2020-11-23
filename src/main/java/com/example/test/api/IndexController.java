@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-// import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -67,7 +66,7 @@ public class IndexController {
     if (f.get().getAdminName() != null) { model.addAttribute("adminName", assetService.adminNameShape(f.get().getAdminName())); }
     if (f.get().getAdminName() != null) { model.addAttribute("assetName", assetService.assetNameShape(f.get().getAssetName())); }
     model.addAttribute("id", f.get().getId());
-    model.addAttribute("selected", f.get().getCategoryId());
+    model.addAttribute("cateogryId", f.get().getCategoryId());
 
     return "index";
   }

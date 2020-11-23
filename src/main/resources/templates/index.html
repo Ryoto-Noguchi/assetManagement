@@ -24,7 +24,7 @@
             <option disabled selected value="">資産種別を選んで下さい</option>
             <option
               th:each="category:${categoryList}"
-              th:selected="${category.categoryId == selected}"
+              th:selected="${category.categoryId == categoryId}"
               th:value="${category.categoryId}"
               th:text="${category.categoryName}"
             ></option>
@@ -96,7 +96,7 @@
             </a>
           </li>
           <li class="page-item" th:with="start = 1, end = ${lastPage}" th:each="pageNumber : ${pageNumbers}">
-            <a class="page-link" th:href="@{/index/{page} (page = ${pageNumber})}" th:text="${pageNumber}"></a>
+            <a class="page-link" th:href="@{/index/{page} (page = ${pageNumber}, id = ${id}, categoryId = ${categoryId}, adminName = ${adminName}, assetName = ${assetName})}" th:text="${pageNumber}"></a>
           </li>
           <li class="page-item" th:if="${assetPage.totalPages > assetPage.getNumber() + 1 }">
             <a th:href="@{/index/{page} (page = ${assetPage.getNumber() + 2})}" class="page-link" aria-label="Next">
