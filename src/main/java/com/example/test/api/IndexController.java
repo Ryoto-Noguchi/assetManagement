@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+// import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -40,17 +40,17 @@ public class IndexController {
   public static final Sort SORT = Sort.by("id").ascending();
 
   /**
-   * トップページの初期表示とページ番号押下時の資産リスト表示
+   * トップページの初期表示と検索時、ページ番号押下時の資産リスト表示
    * @param page
    * @param model
    * @return リクエストされたページの資産リスト
    */
   @GetMapping(path = { "/", "/{page:^[1-9][0-9]*$}" })
-  public String assetPage(@PathVariable(name = "page") Optional<Integer> page, Model model) {
+  public String assetPage(@PathVariable(name = "page") Optional<Integer> page, @ModelAttribute("searchForm") Optional<SearchForm> f, Model model) {
     int currentPage = page.orElse(1); // リクエストされたページ
     if (currentPage == 0) {currentPage = 1;} // 先頭ページを表示している際の「<」押下用
     Pageable pageable = PageRequest.of(currentPage - 1, PAGESIZE, SORT);
-    Page<Asset> assetPage = assetService.findPaginatedPage(pageable);
+    Page<Asset> assetPage = assetService.findSearchedAndPaginatedPage(f, pageable);
     model.addAttribute("assetPage", assetPage);
 
     int totalPages = assetPage.getTotalPages(); // 最後ページ取得
@@ -64,29 +64,11 @@ public class IndexController {
     List<Category> categoryList = categoryService.findAllCategories();
     model.addAttribute("categoryList", categoryList);
 
-    return "index";
-  }
+    if (f.get().getAdminName() != null) { model.addAttribute("adminName", assetService.adminNameShape(f.get().getAdminName())); }
+    if (f.get().getAdminName() != null) { model.addAttribute("assetName", assetService.assetNameShape(f.get().getAssetName())); }
+    model.addAttribute("id", f.get().getId());
+    model.addAttribute("selected", f.get().getCategoryId());
 
-  /**
-   * 検索メソッド
-   * @param f
-   * @param page
-   * @param model
-   * @return
-   */
-  @RequestMapping(value = "/search", method = RequestMethod.POST)
-  public String search(@ModelAttribute("searchForm") SearchForm f, @PathVariable(name = "page") Optional<Integer> page, Model model) {
-    int currentPage = page.orElse(1); // リクエストされたページ
-    if (currentPage == 0) {currentPage = 1;} // 先頭ページを表示している際の「<」押下用
-    Pageable pageable = PageRequest.of(currentPage - 1, PAGESIZE, SORT);
-    Page<Asset> assetPage = assetService.findSearchedAndPaginatedPage(f, pageable);
-    model.addAttribute("assetPage", assetPage);
-    model.addAttribute("adminName", assetService.adminNameShape(f.getAdminName()));
-    model.addAttribute("assetName", assetService.assetNameShape(f.getAssetName()));
-    model.addAttribute("id", f.getId());
-    model.addAttribute("selected", f.getCategoryId());
-    List<Category> categoryList = categoryService.findAllCategories();
-    model.addAttribute("categoryList", categoryList);
     return "index";
   }
 
