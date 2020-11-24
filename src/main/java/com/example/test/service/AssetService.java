@@ -7,6 +7,7 @@ import java.util.Optional;
 import com.example.test.model.dao.AssetRepository;
 import com.example.test.model.entity.Asset;
 import com.example.test.model.form.SearchForm;
+import com.example.test.model.session.SearchSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +22,9 @@ public class AssetService {
 
     @Autowired
     AssetRepository assetRepos;
+
+    @Autowired
+    SearchSession searchSession;
 
     /**
      * 資産IDを条件に資産詳細を取得するメソッド
@@ -57,23 +61,61 @@ public class AssetService {
      * @return
      */
     public Page<Asset> findSearchedAndPaginatedPage(Optional<SearchForm> f, Pageable pageable) {
+
         Integer id = f.get().getId();
         Integer categoryId = f.get().getCategoryId();
         String adminName = f.get().getAdminName();
         String assetName = f.get().getAssetName();
-        if (id == null) { id = 0; }
-        if (categoryId == null) { categoryId = 0; }
-        if (adminName == null) {
-            adminName = "";
+
+        if (searchSession.getId() == null) {
+            if (id == null) {
+                searchSession.setId(0);
+            } else {
+                searchSession.setId(id);
+            }
         } else {
-            adminName = adminNameShape(f.get().getAdminName());
+            if (id != null) {
+                searchSession.setId(id);
+            }
         }
-        if (assetName == null) {
-            assetName = "";
+
+        if (searchSession.getCategoryId() == null) {
+            if (categoryId == null) {
+                searchSession.setCategoryId(0);
+            } else {
+                searchSession.setCategoryId(categoryId);
+            }
         } else {
-            assetName = assetNameShape(f.get().getAssetName());
+            if (categoryId != null) {
+                searchSession.setCategoryId(categoryId);
+            }
         }
-        List<Asset> assets = assetRepos.findByIdAndCategoryIdAndAdminNameAndAssetName(id, categoryId, adminName, assetName); // 検索条件を元に検索(空欄はSQLで無視するようにしてある)
+
+        if (searchSession.getAdminName() == null) {
+            if (adminName == null) {
+                searchSession.setAdminName("");
+            } else {
+                searchSession.setAdminName(adminNameShape(f.get().getAdminName()));
+            }
+        } else {
+            if (adminName != null) {
+                searchSession.setAdminName(adminName);
+            }
+        }
+
+        if (searchSession.getAssetName() == null) {
+            if (assetName == null) {
+                searchSession.setAssetName("");
+            } else {
+                searchSession.setAssetName(assetNameShape(f.get().getAssetName()));
+            }
+        } else {
+            if (assetName != null) {
+                searchSession.setAssetName(assetName);
+            }
+        }
+
+        List<Asset> assets = assetRepos.findByIdAndCategoryIdAndAdminNameAndAssetName(searchSession.getId(), searchSession.getCategoryId(), searchSession.getAdminName(), searchSession.getAssetName()); // 検索条件を元に検索(空欄はSQLで無視するようにしてある)
 
         int pageSize = pageable.getPageSize(); // 1ページあたりの表示するレコード数
         int currentPage = pageable.getPageNumber(); // 現在のページ

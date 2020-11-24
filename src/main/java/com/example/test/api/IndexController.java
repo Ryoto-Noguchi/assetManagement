@@ -64,7 +64,7 @@ public class IndexController {
     model.addAttribute("categoryList", categoryList);
 
     if (f.get().getAdminName() != null) { model.addAttribute("adminName", assetService.adminNameShape(f.get().getAdminName())); }
-    if (f.get().getAdminName() != null) { model.addAttribute("assetName", assetService.assetNameShape(f.get().getAssetName())); }
+    if (f.get().getAssetName() != null) { model.addAttribute("assetName", assetService.assetNameShape(f.get().getAssetName())); }
     model.addAttribute("id", f.get().getId());
     model.addAttribute("cateogryId", f.get().getCategoryId());
 
