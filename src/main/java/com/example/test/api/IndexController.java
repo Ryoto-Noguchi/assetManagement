@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 import com.example.test.model.entity.Asset;
 import com.example.test.model.entity.Category;
 import com.example.test.model.form.SearchForm;
+import com.example.test.model.session.SearchSession;
 import com.example.test.service.AssetService;
 import com.example.test.service.CategoryService;
 
@@ -35,7 +36,19 @@ public class IndexController {
   @Autowired
   private CategoryService categoryService;
 
-  public static final int PAGESIZE = 10;
+  @Autowired
+  SearchSession searchSession;
+
+  @GetMapping("/refresh")
+  public String refresh() {
+    searchSession.setId(0);
+    searchSession.setCategoryId(0);
+    searchSession.setAdminName("");
+    searchSession.setAssetName("");
+    return "redirect:/index/";
+  }
+
+  public static final int PAGESIZE = 3;
   public static final Sort SORT = Sort.by("id").ascending();
 
   /**
