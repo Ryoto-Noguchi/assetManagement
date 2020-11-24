@@ -28,7 +28,6 @@ public class AssetService {
 
     /**
      * 資産IDを条件に資産詳細を取得するメソッド
-     *
      * @param id 資産ID
      * @return SELECT * FROM mst_asset WHERE asset_id = #{assetId};
      */

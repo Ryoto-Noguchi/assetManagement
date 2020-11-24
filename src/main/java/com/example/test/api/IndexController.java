@@ -39,6 +39,10 @@ public class IndexController {
   @Autowired
   SearchSession searchSession;
 
+  /**
+   * トップページへ遷移するメソッド
+   * @return
+   */
   @GetMapping("/refresh")
   public String refresh() {
     searchSession.setId(0);
