@@ -13,6 +13,7 @@ import javax.persistence.Table;
 
 import com.example.test.model.form.ModifyForm;
 import com.example.test.model.form.RegisterForm;
+import com.example.test.model.form.SearchForm;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
@@ -105,6 +106,19 @@ public class Asset implements Serializable {
         this.makerName = f.getMakerName();
         this.accessory = f.getAccessory();
         this.storingPlace = f.getStoringPlace();
+    }
+
+    public Asset(SearchForm f) {
+        this.id = f.getId();
+        this.categoryId = f.getCategoryId();
+        this.adminName = f.getAdminName();
+        this.assetName = f.getAssetName();
+        this.remarks = null;
+        this.serialId = null;
+        this.purchaseDate = null;
+        this.makerName = null;
+        this.accessory = null;
+        this.storingPlace = null;
     }
 
     public Asset(Integer id, Integer categoryId, String adminName, String assetName, String remarks) {

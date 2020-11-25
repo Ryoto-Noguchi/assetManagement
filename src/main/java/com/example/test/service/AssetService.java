@@ -10,6 +10,8 @@ import com.example.test.model.form.SearchForm;
 import com.example.test.model.session.SearchSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -166,5 +168,21 @@ public class AssetService {
     public int logicalDeleteById(int id) {
         return assetRepos.logicalDeleteById(id);
     }
+
+	public List<Asset> search(SearchForm form) {
+        // Asset asset = new Asset();
+
+        // asset.setId(form.getId());
+        // asset.setCategoryId(form.getCategoryId());
+        // asset.setAdminName(form.getAdminName());
+        // return assetRepos.findAll(Example.of(asset));
+        ExampleMatcher customExampleMatcher = ExampleMatcher.matching()
+                    .withMatcher("adminName", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
+                    .withMatcher("assetName", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
+        Asset asset = new Asset(form);
+        Example<Asset> example = Example.of(asset, customExampleMatcher);
+        List<Asset> assets = assetRepos.findAll(example);
+        return assets;
+	}
 
 }
