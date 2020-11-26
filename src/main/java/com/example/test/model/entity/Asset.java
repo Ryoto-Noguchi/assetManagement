@@ -121,6 +121,19 @@ public class Asset implements Serializable {
         this.storingPlace = null;
     }
 
+    public Asset(Asset asset) {
+        this.id = asset.getId();
+        this.categoryId = asset.getCategoryId();
+        this.adminName = asset.getAdminName();
+        this.assetName = asset.getAssetName();
+        this.remarks = asset.getRemarks();
+        this.serialId = asset.getSerialId();
+        this.purchaseDate = asset.getPurchaseDate();
+        this.makerName = asset.getMakerName();
+        this.accessory = asset.getAccessory();
+        this.storingPlace = asset.getStoringPlace();
+    }
+
     public Asset(Integer id, Integer categoryId, String adminName, String assetName, String remarks) {
         this.id = id;
         this.categoryId = categoryId;

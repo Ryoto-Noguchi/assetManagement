@@ -119,17 +119,17 @@ public class AssetService {
         List<Asset> assets = assetRepos.findByIdAndCategoryIdAndAdminNameAndAssetName(searchSession.getId(), searchSession.getCategoryId(), searchSession.getAdminName(), searchSession.getAssetName()); // 検索条件を元に検索(空欄はSQLで無視するようにしてある)
 
         int pageSize = pageable.getPageSize(); // 1ページあたりの表示するレコード数
-        int currentPage = pageable.getPageNumber(); // 現在のページ
-        int startItem = pageSize * currentPage; // 現在表示しているページの1番上のレコード
+        int currentPage = pageable.getPageNumber(); // リクエストされたページ
+        int startItem = pageSize * currentPage; // リクエストされたページの最大値(1ページあたりに表示するレコード数が10なら、2ページ目最大値は20)
         List<Asset> list = null; // Asset型の変数をnullで初期化して保持
-        if (assets.size() < startItem) { // ???
-            list = Collections.emptyList(); // 変数listを空のまま不変にする
+        if (assets.size() < startItem) { // リクエストされたページの最大値よりも取得してきたレコードの数が少なかった時
+            list = Collections.emptyList(); // 空のlistを作成する
         } else {
             int toIndex = Math.min(startItem + pageSize, assets.size()); // 「現在表示しているページの1番上のレコード」＋「10」と「全レコード数」の小さい方をtoIndexとする
             list = assets.subList(startItem, toIndex); // 「現在表示しているページの1番上のレコード」からtoIndexまでのレコード数 = リクエストされたページで表示したいレコード数
         }
 
-        Page<Asset> assetList = new PageImpl<Asset>(list, pageable, assets.size()); // リクエストされたページに合致するレコード情報
+        Page<Asset> assetList = new PageImpl<Asset>(list, pageable, assets.size()); // リクエストされたページに合致するレコード情報(pageableで表示するページ番号を決め、asset.size()で表される検索された全レコードからlistの数ぶん引いたレコードがassetListということみたい)
         return assetList;
     }
 
@@ -169,20 +169,24 @@ public class AssetService {
         return assetRepos.logicalDeleteById(id);
     }
 
-	public List<Asset> search(SearchForm form) {
-        // Asset asset = new Asset();
-
-        // asset.setId(form.getId());
-        // asset.setCategoryId(form.getCategoryId());
-        // asset.setAdminName(form.getAdminName());
-        // return assetRepos.findAll(Example.of(asset));
+	public List<Asset> search(Asset assetForm) {
         ExampleMatcher customExampleMatcher = ExampleMatcher.matching()
                     .withMatcher("adminName", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
-                    .withMatcher("assetName", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
-        Asset asset = new Asset(form);
+                    .withMatcher("assetName", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
+                    .withMatcher("remarks", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
+                    .withMatcher("makerName", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
+                    .withMatcher("serialId", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
+                    .withMatcher("purchaseDate", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
+                    .withMatcher("accessory", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
+                    .withMatcher("storingPlace", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
+                    // .withIgnorePaths("deleteFlag")
+                    // .withIgnorePaths("category");
+        Asset asset = new Asset(assetForm);
         Example<Asset> example = Example.of(asset, customExampleMatcher);
-        List<Asset> assets = assetRepos.findAll(example);
-        return assets;
+        List<Asset> assetList = assetRepos.findAll(example);
+        // Page<Asset> assetPage = assetRepos.findAll(example, pageable)
+        return assetList;
+        // TODO 理解したExampleMatcherとページネーションを合体させて、直に書いているSQLやif文を使用しなくても空欄時の条件無視の検索とページネーションが可能になることを実装しQiitaに掲載
 	}
 
 }
