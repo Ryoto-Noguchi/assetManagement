@@ -2,6 +2,8 @@ package com.example.test.api;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import com.example.test.model.entity.Asset;
 import com.example.test.model.entity.Category;
@@ -35,6 +37,12 @@ public class SearchController {
     Pageable pageable = PageRequest.of(currentPage - 1, 10, sort);
     Page<Asset> assetPage = assetService.search(assetForm, pageable);
     model.addAttribute("assetPage", assetPage);
+
+    int totalPages = assetPage.getTotalPages();
+    if (totalPages > 0) {
+      List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+      model.addAttribute("pageNumbers", pageNumbers);
+    }
 
     List<Category> categoryList = categoryService.findAllCategories();
     model.addAttribute("categoryList", categoryList);

@@ -186,7 +186,7 @@ public class AssetService {
         Page<Asset> assetList = assetRepos.findAll(example, pageable);
         // Page<Asset> assetPage = assetRepos.findAll(example, pageable)
         return assetList;
-        // TODO 理解したExampleMatcherとページネーションを合体させて、直に書いているSQLやif文を使用しなくても空欄時の条件無視の検索とページネーションが可能になることを実装しQiitaに掲載
+        // TODO 次は検索結果を引き継いでページネーションをする機能をセッションを使って実装する。それが終わったらAssetの検索要素全てを検索後にも表示するようHTMLを編集
 	}
 
 }
