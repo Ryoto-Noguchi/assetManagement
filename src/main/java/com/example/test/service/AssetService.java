@@ -169,7 +169,7 @@ public class AssetService {
         return assetRepos.logicalDeleteById(id);
     }
 
-	public List<Asset> search(Asset assetForm) {
+	public Page<Asset> search(Asset assetForm, Pageable pageable) {
         ExampleMatcher customExampleMatcher = ExampleMatcher.matching()
                     .withMatcher("adminName", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
                     .withMatcher("assetName", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
@@ -183,7 +183,7 @@ public class AssetService {
                     // .withIgnorePaths("category");
         Asset asset = new Asset(assetForm);
         Example<Asset> example = Example.of(asset, customExampleMatcher);
-        List<Asset> assetList = assetRepos.findAll(example);
+        Page<Asset> assetList = assetRepos.findAll(example, pageable);
         // Page<Asset> assetPage = assetRepos.findAll(example, pageable)
         return assetList;
         // TODO 理解したExampleMatcherとページネーションを合体させて、直に書いているSQLやif文を使用しなくても空欄時の条件無視の検索とページネーションが可能になることを実装しQiitaに掲載

@@ -78,7 +78,7 @@
         <h1 class="errorMsg" th:text="${assetIdErrorMsg}" th:if="${assetPage == null}"></h1>
 
         <!-- 資産リスト表示 -->
-        <table class="top" th:if="${assetPage != null && assetPage.size() != 0}">
+        <table class="top" th:if="${assetPage != null && assetPage.getSize() != 0}">
           <caption> All asset list </caption>
           <thead>
             <tr>
@@ -106,6 +106,8 @@
           </tbody>
         </table>
       </div>
+
+      <div th:insert="fragments/pagination::pagination"></div>
     </main>
   </body>
 </html>
