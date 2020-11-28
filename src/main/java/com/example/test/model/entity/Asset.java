@@ -136,14 +136,6 @@ public class Asset implements Serializable {
         this.storingPlace = session.getStoringPlace();
     }
 
-    public Asset(Integer id, Integer categoryId, String adminName, String assetName, String remarks) {
-        this.id = id;
-        this.categoryId = categoryId;
-        this.adminName = adminName;
-        this.assetName = assetName;
-        this.remarks = remarks;
-    }
-
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;

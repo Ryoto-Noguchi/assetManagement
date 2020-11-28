@@ -39,7 +39,7 @@ public class AssetController {
     Asset newAsset = new Asset(form);
     int count = assetService.update(newAsset);
     System.out.println(count + "件更新しました");
-    return "redirect:/index/";
+    return "redirect:/index/refresh";
   }
 
   /**
@@ -52,7 +52,7 @@ public class AssetController {
     Asset newAsset = new Asset(form);
     int count = assetService.insert(newAsset);
     System.out.println(count + "件登録しました");
-    return "redirect:/index/";
+    return "redirect:/index/refresh";
   }
 
   /**
@@ -64,7 +64,7 @@ public class AssetController {
   public String delete(@RequestParam("id") int id) {
     int count = assetService.logicalDeleteById(id);
     System.out.println(count + "件削除しました");
-    return "redirect:/index/";
+    return "redirect:/index/refresh";
   }
 
   /**

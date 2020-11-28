@@ -52,9 +52,6 @@ public class IndexController {
     return "redirect:/index/";
   }
 
-  public static final int PAGESIZE = 10;
-  public static final Sort SORT = Sort.by("id").ascending();
-
   /**
    * トップページの初期表示と検索時、ページ番号押下時の資産リスト表示
    * @param page
@@ -65,7 +62,8 @@ public class IndexController {
   public String assetPage(@PathVariable(name = "page") Optional<Integer> page, @ModelAttribute("searchForm") Optional<SearchForm> f, Model model) {
     int currentPage = page.orElse(1); // 押下されたページリンクの数字(リクエストされたページ番号)
     if (currentPage == 0) {currentPage = 1;} // 先頭ページを表示している際の「<」押下用
-    Pageable pageable = PageRequest.of(currentPage - 1, PAGESIZE, SORT);
+    Sort sort = Sort.by("id").ascending();
+    Pageable pageable = PageRequest.of(currentPage - 1, 10, sort);
     Page<Asset> assetPage = assetService.findSearchedAndPaginatedPage(f, pageable);
     model.addAttribute("assetPage", assetPage);
 
