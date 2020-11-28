@@ -137,6 +137,14 @@ public class AssetService {
         return assetList;
     }
 
+    /**
+     * 検索フォームに入力されたキーワードをもとに検索するメソッド
+     * @param id
+     * @param categoryId
+     * @param adminName
+     * @param assetName
+     * @return
+     */
     public List<Asset> findBySearchForm(int id, int categoryId, String adminName, String assetName) {
         return assetRepos.findByIdAndCategoryIdAndAdminNameAndAssetName(id, categoryId, adminName, assetName);
     }
@@ -177,6 +185,12 @@ public class AssetService {
         return assetRepos.logicalDeleteById(id);
     }
 
+    /**
+     * Query By Exampleを使ってSQLを使わず、検索するメソッド
+     * @param assetForm
+     * @param pageable
+     * @return
+     */
 	public Page<Asset> search(Asset assetForm, Pageable pageable) {
         ExampleMatcher customExampleMatcher = ExampleMatcher.matching()
                     .withMatcher("adminName", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import lombok.Data;
 
+// 画面から送られてきたCSVとして出力する資産リストを受け取るにはList<Object>がフィールドにあるクラスが必要
 @JsonPropertyOrder({"資産ID", "資産種別", "管理者名", "資産名", "備考"})
 @Data
 public class CSV {

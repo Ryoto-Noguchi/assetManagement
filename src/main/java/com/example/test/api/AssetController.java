@@ -78,7 +78,7 @@ public class AssetController {
   @ResponseBody
   public Object csvDownload(@ModelAttribute("csvForm") CSV records) throws JsonProcessingException {
     List<CsvColumn> csvList = new ArrayList<>();
-    for (int i = 0; i < records.getId().size(); i++) {
+    for (int i = 0; i < records.getId().size(); i++) { // レコードの数ぶんだけループ回して
       csvList.add(new CsvColumn(records.getId().get(i), records.getCategoryId().get(i), records.getAdminName().get(i), records.getAssetName().get(i), records.getRemarks().get(i)));
     }
     CsvMapper mapper = new CsvMapper();

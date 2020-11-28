@@ -33,6 +33,13 @@ public class SearchController {
   @Autowired
   private KeywordSession session;
 
+  /**
+   * 検索窓を増やして、Query By Exmapleを使用して検索処理するメソッド
+   * @param assetForm
+   * @param page
+   * @param model
+   * @return
+   */
   @GetMapping(path = {"/search", "/search/{page:^[1-9][0-9]*$}"})
   public String search(@ModelAttribute("assetForm") Asset assetForm, @PathVariable(name = "page") Optional<Integer> page, Model model) {
     int currentPage = page.orElse(1); // 押下されたページリンクの数字(リクエストされたページ番号)

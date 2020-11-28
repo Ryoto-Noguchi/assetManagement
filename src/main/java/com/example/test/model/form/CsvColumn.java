@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import lombok.Data;
 
+// 画面から受け取った各カラムのまとまりを一つ一つのレコードにばらす処理にはこのクラスが必要
 @JsonPropertyOrder({"資産ID", "資産種別", "管理者名", "資産名", "備考"})
 @Data
 public class CsvColumn {
