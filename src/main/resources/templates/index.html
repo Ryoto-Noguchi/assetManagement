@@ -34,7 +34,7 @@
         </form>
         <br>
         <form id="csvform" method="post" th:action="@{/asset/csv}" th:object="${csvForm}">
-          <div th:each="asset:${assetPage}">
+          <div th:each="asset:${assets}">
             <input type="hidden" name="id" th:value="${asset.id}" />
             <input type="hidden" name="categoryId" th:value="${asset.categoryId}" />
             <input type="hidden" name="adminName" th:value="${asset.adminName}" />

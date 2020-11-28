@@ -75,9 +75,10 @@ public class IndexController {
       model.addAttribute("pageNumbers", pageNumbers);
     }
 
+    List<Asset> assets = assetService.findBySearchForm(searchSession.getId(), searchSession.getCategoryId(), searchSession.getAdminName(), searchSession.getAssetName()); // CSVダウンロード用に検索結果全てをassetsとして取得して画面に投げる
+    model.addAttribute("assets", assets);
     List<Category> categoryList = categoryService.findAllCategories();
     model.addAttribute("categoryList", categoryList);
-
     model.addAttribute("adminName", assetService.adminNameShape(searchSession.getAdminName()));
     model.addAttribute("assetName", assetService.assetNameShape(searchSession.getAssetName()));
     model.addAttribute("id", f.get().getId());

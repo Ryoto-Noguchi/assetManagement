@@ -120,7 +120,7 @@ public class AssetService {
             }
         }
 
-        List<Asset> assets = assetRepos.findByIdAndCategoryIdAndAdminNameAndAssetName(searchSession.getId(), searchSession.getCategoryId(), searchSession.getAdminName(), searchSession.getAssetName()); // 検索条件を元に検索(空欄はSQLで無視するようにしてある)
+        List<Asset> assets = findBySearchForm(searchSession.getId(), searchSession.getCategoryId(), searchSession.getAdminName(), searchSession.getAssetName()); // 検索条件を元に検索(空欄はSQLで無視するようにしてある)
 
         int pageSize = pageable.getPageSize(); // 1ページあたりの表示するレコード数
         int currentPage = pageable.getPageNumber(); // リクエストされたページ
@@ -135,6 +135,10 @@ public class AssetService {
 
         Page<Asset> assetList = new PageImpl<Asset>(list, pageable, assets.size()); // リクエストされたページに合致するレコード情報(pageableで表示するページ番号を決め、asset.size()で表される検索された全レコードからlistの数ぶん引いたレコードがassetListということみたい)
         return assetList;
+    }
+
+    public List<Asset> findBySearchForm(int id, int categoryId, String adminName, String assetName) {
+        return assetRepos.findByIdAndCategoryIdAndAdminNameAndAssetName(id, categoryId, adminName, assetName);
     }
 
     /**
