@@ -9,37 +9,8 @@
     <header th:insert="fragments/page_header::pageHeader"></header>
     <main>
       <div class="container">
-        <div class="register-box">
-          <h2 class="register-text">
-            <a th:href="@{/index/register}" id="register-link">資産登録</a>
-          </h2>
-        </div>
-        <form th:action="@{/index/}" th:object="${searchForm}" method="GET" name="searchForm" id="searchForm">
-          <!-- 資産ID検索窓 -->
-          <label for="id">資産ID</label>
-          <input type="text" name="id" id="id" th:value="${id}"/>
-          <!-- カテゴリ選択窓 -->
-          <label for="categoryId">資産種別</label>
-          <select name="categoryId" id="categoryId">
-            <option disabled selected value="">資産種別を選んで下さい</option>
-            <option
-              th:each="category:${categoryList}"
-              th:selected="${category.categoryId == categoryId}"
-              th:value="${category.categoryId}"
-              th:text="${category.categoryName}"
-            ></option>
-          </select>
-          <!-- 管理者名検索窓 -->
-          <label for="adminName">管理者</label>
-          <input type="text" name="adminName" id="adminName" th:value="${adminName}"/>
-          <!-- 検索ワード窓 -->
-          <label for="assetName">資産名</label>
-          <input type="text" name="assetName" id="assetName" th:value="${assetName}"/>
-          <button id="searchBtn" type="submit">検索</button>
-        </form>
-
         <!-- Query By Exampleの練習 -->
-        <form th:action="@{/search}" th:object="${searchForm}" method="POST" name="searchForm" id="searchForm">
+        <form th:action="@{/search}" th:object="${assetForm}" method="GET" name="assetForm" id="assetForm">
           <!-- 資産ID検索窓 -->
           <label for="id">資産ID</label>
           <input type="text" name="id" id="id" th:value="${id}"/>
@@ -60,6 +31,24 @@
           <!-- 資産名検索窓 -->
           <label for="assetName">資産名</label>
           <input type="text" name="assetName" id="assetName" th:value="${assetName}"/>
+          <!-- 備考検索窓 -->
+          <label for="remarks">備考</label>
+          <input type="text" name="remarks" id="remarks" th:value="${remarks}"/>
+          <!-- シリアルID検索窓 -->
+          <label for="serialId">シリアルID</label>
+          <input type="text" name="serialId" id="serialId" th:value="${serialId}"/>
+          <!-- 購入年月日検索窓 -->
+          <label for="purchaseDate">購入年月日</label>
+          <input type="text" name="purchaseDate" id="purchaseDate" th:value="${purchaseDate}"/>
+          <!-- メーカー名検索窓 -->
+          <label for="makerName">メーカー名</label>
+          <input type="text" name="makerName" id="makerName" th:value="${makerName}"/>
+          <!-- 付属品検索窓 -->
+          <label for="accessory">付属品</label>
+          <input type="text" name="accessory" id="accessory" th:value="${accessory}"/>
+          <!-- 保管場所検索窓 -->
+          <label for="storingPlace">保管場所</label>
+          <input type="text" name="storingPlace" id="storingPlace" th:value="${storingPlace}"/>
           <!-- 検索ボタン -->
           <button id="searchBtn" type="submit">検索</button>
         </form>
@@ -106,7 +95,6 @@
           </tbody>
         </table>
       </div>
-
       <div th:insert="fragments/pagination::pagination"></div>
     </main>
   </body>

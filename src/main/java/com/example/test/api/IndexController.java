@@ -37,7 +37,7 @@ public class IndexController {
   private CategoryService categoryService;
 
   @Autowired
-  SearchSession searchSession;
+  private SearchSession searchSession;
 
   /**
    * トップページへ遷移するメソッド

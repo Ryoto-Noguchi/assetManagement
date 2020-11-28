@@ -7,6 +7,7 @@ import java.util.stream.IntStream;
 
 import com.example.test.model.entity.Asset;
 import com.example.test.model.entity.Category;
+import com.example.test.model.session.KeywordSession;
 import com.example.test.service.AssetService;
 import com.example.test.service.CategoryService;
 
@@ -29,27 +30,30 @@ public class SearchController {
   @Autowired
   private CategoryService categoryService;
 
+  @Autowired
+  private KeywordSession session;
+
   @GetMapping(path = {"/search", "/search/{page:^[1-9][0-9]*$}"})
-  public String search(@ModelAttribute("keywordSession") Asset assetForm, @PathVariable(name = "page") Optional<Integer> page, Model model) {
+  public String search(@ModelAttribute("assetForm") Asset assetForm, @PathVariable(name = "page") Optional<Integer> page, Model model) {
     int currentPage = page.orElse(1); // 押下されたページリンクの数字(リクエストされたページ番号)
     if (currentPage == 0) {currentPage = 1;} // 先頭ページを表示している際の「<」押下用
-    Sort sort = Sort.by("id").ascending();
-    Pageable pageable = PageRequest.of(currentPage - 1, 2, sort);
-    Page<Asset> assetPage = assetService.search(assetForm, pageable);
+    Sort sort = Sort.by("id").ascending(); // ソートのルールを作成
+    Pageable pageable = PageRequest.of(currentPage - 1, 2, sort); // ページネーション情報作成
+    Page<Asset> assetPage = assetService.search(assetForm, pageable); // 検索キーワードとページネーション情報を利用して検索
     model.addAttribute("assetPage", assetPage);
 
     int totalPages = assetPage.getTotalPages();
     if (totalPages > 0) {
-      List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+      List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList()); // HTMLでページ分ループするために各ページ番号が入ったリストを作成
       model.addAttribute("pageNumbers", pageNumbers);
     }
 
     List<Category> categoryList = categoryService.findAllCategories();
     model.addAttribute("categoryList", categoryList);
-    if (assetForm.getAdminName() != null) { model.addAttribute("adminName", assetService.adminNameShape(assetForm.getAdminName())); }
-    if (assetForm.getAssetName() != null) { model.addAttribute("assetName", assetService.assetNameShape(assetForm.getAssetName())); }
+    if (assetForm.getAdminName() != null) { model.addAttribute("adminName", assetService.adminNameShape(session.getAdminName())); }
+    if (assetForm.getAssetName() != null) { model.addAttribute("assetName", assetService.assetNameShape(session.getAssetName())); }
     model.addAttribute("id", assetForm.getId());
-    model.addAttribute("categoryId", assetForm.getCategoryId());
+    model.addAttribute("categoryId", session.getCategoryId());
     return "practice";
   }
 

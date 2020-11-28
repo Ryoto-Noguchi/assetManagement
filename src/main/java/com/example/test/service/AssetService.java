@@ -183,10 +183,10 @@ public class AssetService {
                     .withMatcher("purchaseDate", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
                     .withMatcher("accessory", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
                     .withMatcher("storingPlace", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
-            Asset sample = new Asset();
-            if (assetForm.equals(sample)) {
+            Asset sample = new Asset(); // 空のAssetを用意して、ページリンク押下と[検索]押下でセッションを更新するか否かを判断する材料にする
+            if (assetForm.equals(sample)) { // ページリンク押下のため、assetFormが空の時、既存のセッション情報を使う。※equalsメソッドはAssetクラスでオーバーライドしておかなきゃダメ
                 System.out.println("検索空欄");
-            } else {
+            } else { // [検索]押下でセッション情報を更新する
                 session.setId(assetForm.getId());
                 session.setCategoryId(assetForm.getCategoryId());
                 session.setAdminName(assetForm.getAdminName());
@@ -199,10 +199,10 @@ public class AssetService {
                 session.setStoringPlace(assetForm.getStoringPlace());
             }
         Asset asset = new Asset(session);
-        Example<Asset> example = Example.of(asset, customExampleMatcher);
-        Page<Asset> assetList = assetRepos.findAll(example, pageable);
+        Example<Asset> example = Example.of(asset, customExampleMatcher); // 検索条件を作成する
+        Page<Asset> assetList = assetRepos.findAll(example, pageable); // 検索条件とページネーション情報を使って画面に表示したい資産を取得
         return assetList;
-        // TODO 次は検索結果を引き継いでページネーションをする機能をセッションを使って実装する。それが終わったらAssetの検索要素全てを検索後にも表示するようHTMLを編集
+        // TODO 次はQiitaに投稿できる機能を選んで投稿
 	}
 
 }
