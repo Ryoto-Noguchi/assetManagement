@@ -1,6 +1,7 @@
 package com.example.test.model.entity;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import javax.persistence.Table;
 import com.example.test.model.form.ModifyForm;
 import com.example.test.model.form.RegisterForm;
 import com.example.test.model.form.SearchForm;
+import com.example.test.model.session.KeywordSession;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
@@ -121,17 +123,17 @@ public class Asset implements Serializable {
         this.storingPlace = null;
     }
 
-    public Asset(Asset asset) {
-        this.id = asset.getId();
-        this.categoryId = asset.getCategoryId();
-        this.adminName = asset.getAdminName();
-        this.assetName = asset.getAssetName();
-        this.remarks = asset.getRemarks();
-        this.serialId = asset.getSerialId();
-        this.purchaseDate = asset.getPurchaseDate();
-        this.makerName = asset.getMakerName();
-        this.accessory = asset.getAccessory();
-        this.storingPlace = asset.getStoringPlace();
+    public Asset(KeywordSession session) {
+        this.id = session.getId();
+        this.categoryId = session.getCategoryId();
+        this.adminName = session.getAdminName();
+        this.assetName = session.getAssetName();
+        this.remarks = session.getRemarks();
+        this.serialId = session.getSerialId();
+        this.purchaseDate = session.getPurchaseDate();
+        this.makerName = session.getMakerName();
+        this.accessory = session.getAccessory();
+        this.storingPlace = session.getStoringPlace();
     }
 
     public Asset(Integer id, Integer categoryId, String adminName, String assetName, String remarks) {
@@ -142,4 +144,41 @@ public class Asset implements Serializable {
         this.remarks = remarks;
     }
 
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Asset)) {
+            return false;
+        }
+        Asset other = (Asset)obj;
+        if (!Objects.equals(id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(categoryId, other.categoryId)) {
+            return false;
+        }
+        if (!Objects.equals(adminName, other.adminName)) {
+            return false;
+        }
+        if (!Objects.equals(assetName, other.assetName)) {
+            return false;
+        }
+        if (!Objects.equals(remarks, other.remarks)) {
+            return false;
+        }
+        if (!Objects.equals(serialId, other.serialId)) {
+            return false;
+        }
+        if (!Objects.equals(purchaseDate, other.purchaseDate)) {
+            return false;
+        }
+        if (!Objects.equals(accessory, other.accessory)) {
+            return false;
+        }
+        if (!Objects.equals(storingPlace, other.storingPlace)) {
+            return false;
+        }
+        return true;
+    }
 }

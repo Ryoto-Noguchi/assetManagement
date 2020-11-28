@@ -7,6 +7,7 @@ import java.util.Optional;
 import com.example.test.model.dao.AssetRepository;
 import com.example.test.model.entity.Asset;
 import com.example.test.model.form.SearchForm;
+import com.example.test.model.session.KeywordSession;
 import com.example.test.model.session.SearchSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class AssetService {
 
     @Autowired
     SearchSession searchSession;
+
+    @Autowired
+    KeywordSession session;
 
     /**
      * 資産IDを条件に資産詳細を取得するメソッド
@@ -179,12 +183,24 @@ public class AssetService {
                     .withMatcher("purchaseDate", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
                     .withMatcher("accessory", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
                     .withMatcher("storingPlace", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
-                    // .withIgnorePaths("deleteFlag")
-                    // .withIgnorePaths("category");
-        Asset asset = new Asset(assetForm);
+            Asset sample = new Asset();
+            if (assetForm.equals(sample)) {
+                System.out.println("検索空欄");
+            } else {
+                session.setId(assetForm.getId());
+                session.setCategoryId(assetForm.getCategoryId());
+                session.setAdminName(assetForm.getAdminName());
+                session.setAssetName(assetForm.getAssetName());
+                session.setRemarks(assetForm.getRemarks());
+                session.setMakerName(assetForm.getMakerName());
+                session.setSerialId(assetForm.getSerialId());
+                session.setPurchaseDate(assetForm.getPurchaseDate());
+                session.setAccessory(assetForm.getAccessory());
+                session.setStoringPlace(assetForm.getStoringPlace());
+            }
+        Asset asset = new Asset(session);
         Example<Asset> example = Example.of(asset, customExampleMatcher);
         Page<Asset> assetList = assetRepos.findAll(example, pageable);
-        // Page<Asset> assetPage = assetRepos.findAll(example, pageable)
         return assetList;
         // TODO 次は検索結果を引き継いでページネーションをする機能をセッションを使って実装する。それが終わったらAssetの検索要素全てを検索後にも表示するようHTMLを編集
 	}

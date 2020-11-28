@@ -17,9 +17,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class SearchController {
@@ -29,12 +29,12 @@ public class SearchController {
   @Autowired
   private CategoryService categoryService;
 
-  @PostMapping("/search")
-  public String search(@ModelAttribute("assetForm") Asset assetForm, @PathVariable(name = "page") Optional<Integer> page, Model model) {
+  @GetMapping(path = {"/search", "/search/{page:^[1-9][0-9]*$}"})
+  public String search(@ModelAttribute("keywordSession") Asset assetForm, @PathVariable(name = "page") Optional<Integer> page, Model model) {
     int currentPage = page.orElse(1); // 押下されたページリンクの数字(リクエストされたページ番号)
     if (currentPage == 0) {currentPage = 1;} // 先頭ページを表示している際の「<」押下用
     Sort sort = Sort.by("id").ascending();
-    Pageable pageable = PageRequest.of(currentPage - 1, 10, sort);
+    Pageable pageable = PageRequest.of(currentPage - 1, 2, sort);
     Page<Asset> assetPage = assetService.search(assetForm, pageable);
     model.addAttribute("assetPage", assetPage);
 
@@ -49,7 +49,7 @@ public class SearchController {
     if (assetForm.getAdminName() != null) { model.addAttribute("adminName", assetService.adminNameShape(assetForm.getAdminName())); }
     if (assetForm.getAssetName() != null) { model.addAttribute("assetName", assetService.assetNameShape(assetForm.getAssetName())); }
     model.addAttribute("id", assetForm.getId());
-    model.addAttribute("cateogryId", assetForm.getCategoryId());
+    model.addAttribute("categoryId", assetForm.getCategoryId());
     return "practice";
   }
 
