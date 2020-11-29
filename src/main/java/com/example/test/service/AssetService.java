@@ -220,7 +220,6 @@ public class AssetService {
         Example<Asset> example = Example.of(asset, customExampleMatcher); // 検索条件を作成する
         Page<Asset> assetList = assetRepos.findAll(example, pageable); // 検索条件とページネーション情報を使って画面に表示したい資産を取得
         return assetList;
-        // TODO 次はQiitaに投稿できる機能を選んで投稿
 	}
 
 }

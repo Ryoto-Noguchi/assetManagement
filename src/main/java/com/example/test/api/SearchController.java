@@ -45,7 +45,7 @@ public class SearchController {
     int currentPage = page.orElse(1); // 押下されたページリンクの数字(リクエストされたページ番号)
     if (currentPage == 0) {currentPage = 1;} // 先頭ページを表示している際の「<」押下用
     Sort sort = Sort.by("id").ascending(); // ソートのルールを作成
-    Pageable pageable = PageRequest.of(currentPage - 1, 2, sort); // ページネーション情報作成
+    Pageable pageable = PageRequest.of(currentPage - 1, 5, sort); // ページネーション情報作成
     Page<Asset> assetPage = assetService.search(assetForm, pageable); // 検索キーワードとページネーション情報を利用して検索
     model.addAttribute("assetPage", assetPage);
 
