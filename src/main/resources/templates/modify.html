@@ -1,121 +1,114 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Asset Management</title>
-  </head>
-  <style>
-    table {
-      border: 1px solid black;
-      border-collapse: collapse;
-      text-align: center;
-    }
 
-    table th,
-    table td,
-    table tr {
-      border: solid 1px black;
-    }
-  </style>
-  <body>
-    <header th:insert="fragments/page_header::pageHeader"></header>
-    <main>
-      <div class="container">
-        <form
-          th:action="@{/asset/modify}"
-          method="POST"
-          name="modifyForm"
-          th:object="${modifyForm}"
-        >
-          <table th:object="${asset}">
-            <caption>
-              Searched Asset Detail
-            </caption>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asset Management</title>
+</head>
+<style>
+  table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+  }
+
+  table th,
+  table td,
+  table tr {
+    border: solid 1px black;
+  }
+
+  input,
+  option {
+    text-align: center;
+  }
+</style>
+
+<body>
+  <header th:insert="fragments/page_header::pageHeader"></header>
+  <main>
+    <div class="container text-center">
+      <form th:action="@{/asset/modify}" method="POST" name="modifyForm" th:object="${modifyForm}">
+        <table th:object="${asset}" class="table table-hover table-responsive-md text-center table-bordered">
+          <caption>
+            Searched Asset Detail
+          </caption>
+          <thead class="thead-light">
             <tr>
-              <th class="table-column">項目名</th>
-              <th class="table-column">内容</th>
+              <th class="table-column" scope="row" style="width: 50vw;">項目名</th>
+              <th class="table-column" scope="col" style="width: 50vw;">内容</th>
             </tr>
-            <tr>
-              <th class="column">資産ID</th>
-              <td class="column" th:text="*{id}"></td>
-              <input type="hidden" name="id" th:value="*{id}"/>
-            </tr>
-            <tr>
-              <th class="table-column">資産種別</th>
-              <td class="table-column">
-                <select name="categoryId" id="categoryId_input">
-                  <option disabled value="0">資産種別を選んで下さい</option>
-                  <option
-                    th:each="category:${categoryList}"
-                    th:value="${category.categoryId}"
-                    th:text="${category.categoryName}"
-                    th:selected="${selected == category.categoryId}"
-                  ></option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <th class="table-column">管理者</th>
-              <td class="table-column">
-                <input type="text" name="adminName" th:value="*{adminName}" />
-              </td>
-            </tr>
-            <tr>
-              <th class="table-column">資産名</th>
-              <td class="table-column">
-                <input type="text" name="assetName" th:value="*{assetName}" />
-              </td>
-            </tr>
-            <tr>
-              <th class="table-column">備考</th>
-              <td class="table-column">
-                <input type="text" name="remarks" th:value="*{remarks}" />
-              </td>
-            </tr>
-            <tr>
-              <th class="table-column">シリアルID</th>
-              <td class="table-column">
-                <input type="text" name="serialId" th:value="*{serialId}" />
-              </td>
-            </tr>
-            <tr>
-              <th class="table-column">購入年月日</th>
-              <td class="table-column">
-                <input
-                  type="text"
-                  name="purchaseDate"
-                  th:value="*{purchaseDate}"
-                />
-              </td>
-            </tr>
-            <tr>
-              <th class="table-column">メーカー名</th>
-              <td class="table-column">
-                <input type="text" name="makerName" th:value="*{makerName}" />
-              </td>
-            </tr>
-            <tr>
-              <th class="table-column">付属品</th>
-              <td class="table-column">
-                <input type="text" name="accessory" th:value="*{accessory}" />
-              </td>
-            </tr>
-            <tr>
-              <th class="table-column">保管場所</th>
-              <td class="table-column">
-                <input
-                  type="text"
-                  name="storingPlace"
-                  th:value="*{storingPlace}"
-                />
-              </td>
-            </tr>
-          </table>
-          <button class="btn" type="submit">登録</button>
-          <button type="button" onclick="history.back()">キャンセル</button>
-        </form>
-      </div>
-    </main>
-  </body>
+          </thead>
+          <tr>
+            <th class="column" scope="row">資産ID</th>
+            <td class="column" th:text="*{id}"></td>
+            <input type="hidden" name="id" th:value="*{id}" />
+          </tr>
+          <tr>
+            <th class="table-column" scope="row">資産種別</th>
+            <td class="table-column">
+              <select name="categoryId" id="categoryId_input">
+                <option disabled value="0">資産種別を選んで下さい</option>
+                <option th:each="category:${categoryList}" th:value="${category.categoryId}"
+                  th:text="${category.categoryName}" th:selected="${selected == category.categoryId}"></option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <th class="table-column" scope="row">管理者</th>
+            <td class="table-column">
+              <input type="text" name="adminName" th:value="*{adminName}" />
+            </td>
+          </tr>
+          <tr>
+            <th class="table-column" scope="row">資産名</th>
+            <td class="table-column">
+              <input type="text" name="assetName" th:value="*{assetName}" />
+            </td>
+          </tr>
+          <tr>
+            <th class="table-column" scope="row">備考</th>
+            <td class="table-column">
+              <input type="text" name="remarks" th:value="*{remarks}" />
+            </td>
+          </tr>
+          <tr>
+            <th class="table-column" scope="row">シリアルID</th>
+            <td class="table-column">
+              <input type="text" name="serialId" th:value="*{serialId}" />
+            </td>
+          </tr>
+          <tr>
+            <th class="table-column" scope="row">購入年月日</th>
+            <td class="table-column">
+              <input type="text" name="purchaseDate" th:value="*{purchaseDate}" />
+            </td>
+          </tr>
+          <tr>
+            <th class="table-column" scope="row">メーカー名</th>
+            <td class="table-column">
+              <input type="text" name="makerName" th:value="*{makerName}" />
+            </td>
+          </tr>
+          <tr>
+            <th class="table-column" scope="row">付属品</th>
+            <td class="table-column">
+              <input type="text" name="accessory" th:value="*{accessory}" />
+            </td>
+          </tr>
+          <tr>
+            <th class="table-column" scope="row">保管場所</th>
+            <td class="table-column">
+              <input type="text" name="storingPlace" th:value="*{storingPlace}" />
+            </td>
+          </tr>
+        </table>
+        <button class="btn btn-info mr-2" type="submit">登録</button>
+        <button type="button" class="btn btn-warning" onclick="history.back()">戻る</button>
+      </form>
+    </div>
+  </main>
+</body>
+
 </html>

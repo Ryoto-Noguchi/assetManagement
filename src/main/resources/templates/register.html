@@ -13,7 +13,7 @@
   <body>
     <header th:insert="fragments/page_header::pageHeader"></header>
     <main>
-      <div class="container">
+      <div class="container justify-content-center">
         <form
           th:action="@{/asset/register}"
           method="POST"
@@ -22,24 +22,24 @@
           th:object="${registerForm}"
         >
           <!-- <h2 class="page-title">資産登録</h2> -->
-          <table id="register" class="asset">
+          <table id="register" class="asset table table-hover table-bordered table-responsive-md text-center">
             <caption>
               Asset register table
             </caption>
-            <thead>
+            <thead class="thead-light">
               <tr>
-                <th id="itemName_cell">項目名</th>
-                <th id="content_cell">内容</th>
+                <th id="itemName_cell" scope="row" style="width: 50vw;">項目名</th>
+                <th id="content_cell" scope="col" style="width: 50vw;">内容</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <th id="id_cell">資産ID</th>
+                <th id="id_cell" scope="row">資産ID</th>
                 <th id="id_input_cell" th:text="${newId}"></th>
                 <input type="hidden" name="id" th:value="${newId}" />
               </tr>
               <tr>
-                <th id="category_cell">資産種別</th>
+                <th id="category_cell" scope="row">資産種別</th>
                 <th id="category_input_cell">
                   <select name="categoryId" id="categoryId_input">
                     <option disabled value="0">資産種別を選んで下さい</option>
@@ -52,7 +52,7 @@
                 </th>
               </tr>
               <tr>
-                <th id="adminName_cell">管理者</th>
+                <th id="adminName_cell" scope="row">管理者</th>
                 <th id="adminName_input_cell">
                   <input
                     type="text"
@@ -62,7 +62,7 @@
                 </th>
               </tr>
               <tr>
-                <th id="assetName_cell">資産名</th>
+                <th id="assetName_cell" scope="row">資産名</th>
                 <th id="assetName_input_cell">
                   <input
                     type="text"
@@ -72,7 +72,7 @@
                 </th>
               </tr>
               <tr>
-                <th id="remarks_cell">備考</th>
+                <th id="remarks_cell" scope="row">備考</th>
                 <th id="remarks_input_cell">
                   <input
                     type="text"
@@ -82,13 +82,13 @@
                 </th>
               </tr>
               <tr>
-                <th id="serialID_cell">シリアルID</th>
+                <th id="serialID_cell" scope="row">シリアルID</th>
                 <th id="serialID_input_cell">
                   <input type="text" name="serialId" placeholder="例）AK3091" />
                 </th>
               </tr>
               <tr>
-                <th id="purchaseDate_cell">購入年月日</th>
+                <th id="purchaseDate_cell" scope="row">購入年月日</th>
                 <th id="purchaseDate_input_cell">
                   <input
                     type="text"
@@ -98,13 +98,13 @@
                 </th>
               </tr>
               <tr>
-                <th id="makerName_cell">メーカー名</th>
+                <th id="makerName_cell" scope="row">メーカー名</th>
                 <th id="makerName_input_cell">
                   <input type="text" name="makerName" placeholder="例）東芝" />
                 </th>
               </tr>
               <tr>
-                <th id="accessory_cell">付属品</th>
+                <th id="accessory_cell" scope="row">付属品</th>
                 <th id="accessory_input_cell">
                   <input
                     type="text"
@@ -114,7 +114,7 @@
                 </th>
               </tr>
               <tr>
-                <th id="storingPlace_cell">保管場所</th>
+                <th id="storingPlace_cell" scope="row">保管場所</th>
                 <th id="storingPlace_input_cell">
                   <input
                     type="text"
@@ -125,8 +125,10 @@
               </tr>
             </tbody>
           </table>
-          <button type="submit" class="btn">登録する</button>
-          <button type="button" onclick="history.back()" class="btn">戻る</button>
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-info mr-3">登録</button>
+            <button type="button" onclick="history.back()" class="btn btn-warning">戻る</button>
+          </div>
         </form>
       </div>
     </main>

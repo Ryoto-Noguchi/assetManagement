@@ -9,13 +9,13 @@
     <header th:insert="fragments/page_header::pageHeader"></header>
     <main>
       <div class="container">
-        <form th:action="@{/index/}" th:object="${searchForm}" method="GET" name="searchForm" id="searchForm">
+        <form th:action="@{/index/}" th:object="${searchForm}" method="GET" name="searchForm" id="searchForm" class="align-items-center">
           <!-- 資産ID検索窓 -->
-          <label for="id">資産ID</label>
-          <input type="text" name="id" id="id" th:value="${id}"/>
+          <label class="mr-2 mb-0" for="id">資産ID</label>
+          <input class="mr-3" type="text" name="id" id="id" th:value="${id}"/>
           <!-- カテゴリ選択窓 -->
-          <label for="categoryId">資産種別</label>
-          <select name="categoryId" id="categoryId">
+          <label class="mr-2 mb-0" for="categoryId">資産種別</label>
+          <select class="mr-3" name="categoryId" id="categoryId">
             <option disabled selected value="">資産種別を選んで下さい</option>
             <option
               th:each="category:${categoryList}"
@@ -25,12 +25,12 @@
             ></option>
           </select>
           <!-- 管理者名検索窓 -->
-          <label for="adminName">管理者</label>
-          <input type="text" name="adminName" id="adminName" th:value="${adminName}"/>
+          <label class="mr-2 mb-0" for="adminName">管理者</label>
+          <input class="mr-3" type="text" name="adminName" id="adminName" th:value="${adminName}"/>
           <!-- 検索ワード窓 -->
-          <label for="assetName">資産名</label>
-          <input type="text" name="assetName" id="assetName" th:value="${assetName}"/>
-          <button id="searchBtn" type="submit">検索</button>
+          <label class="mr-2 mb-0" for="assetName">資産名</label>
+          <input class="mr-3" type="text" name="assetName" id="assetName" th:value="${assetName}"/>
+          <button id="searchBtn" class="btn btn-warning" type="submit">検索</button>
         </form>
         <br>
         <form id="csvform" method="post" th:action="@{/asset/csv}" th:object="${csvForm}">
@@ -41,22 +41,22 @@
             <input type="hidden" name="assetName" th:value="${asset.assetName}" />
             <input type="hidden" name="remarks" th:value="${asset.remarks}" />
           </div>
-          <button type="submit">CSV</button>
+          <button class="btn btn-info mb-4" type="submit">CSV</button>
         </form>
 
         <!-- 検索エラーメッセージ表示 -->
         <h1 class="errorMsg" th:text="${assetIdErrorMsg}" th:if="${assetPage == null}"></h1>
 
         <!-- 資産リスト表示 -->
-        <table class="top" th:if="${assetPage != null && assetPage.getSize() != 0}">
+        <table class="top table table-hover table-bordered table-responsive-md text-center" th:if="${assetPage != null && assetPage.getSize() != 0}">
           <caption> All asset list </caption>
-          <thead>
+          <thead class="thead-light">
             <tr>
-              <th id="id_cell">資産ID</th>
-              <th id="categoryName_cell">資産種別</th>
-              <th id="adminName_cell">管理者名</th>
-              <th id="assetName_cell">資産名</th>
-              <th id="remarks_cell">備考</th>
+              <th scope="col" id="id_cell">資産ID</th>
+              <th scope="col" id="categoryName_cell">資産種別</th>
+              <th scope="col" id="adminName_cell">管理者名</th>
+              <th scope="col" id="assetName_cell">資産名</th>
+              <th scope="col" id="remarks_cell">備考</th>
             </tr>
           </thead>
           <tbody>
@@ -79,7 +79,7 @@
       <!-- ページネーション -->
       <th:block th:if="${assetPage.totalPages > 0}">
         <nav aria-label="Page navigation">
-        <ul class="pagination">
+        <ul class="pagination mt-3">
           <li class="page-item">
             <a th:href="@{/index/1}" class="page-link" aria-label="Previous">
               <span aria-hidden="true">&lt;&lt;</span>

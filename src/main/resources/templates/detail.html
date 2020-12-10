@@ -27,65 +27,65 @@
     <header th:insert="fragments/page_header::pageHeader"></header>
     <main>
       <div class="container">
-        <table th:object="${asset}">
+        <table th:object="${asset}" class="table table-responsive table-bordered table-hover text-center ">
           <caption>
             Searched Asset Detail
           </caption>
           <tr>
-            <th class="table-column">項目名</th>
-            <th class="table-column">内容</th>
+            <th class="table-column" scope="col" style="width: 50vw;">項目名</th>
+            <th class="table-column" scope="col" style="width: 50vw;">内容</th>
           </tr>
           <tr>
-            <th class="column">資産ID</th>
+            <th class="column" scope="row">資産ID</th>
             <td class="column" th:text="*{id}"></td>
           </tr>
           <tr>
-            <th class="table-column">資産種別</th>
+            <th class="table-column" scope="row">資産種別</th>
             <td class="table-column" th:text="*{category.categoryName}"></td>
           </tr>
           <tr>
-            <th class="table-column">管理者</th>
+            <th class="table-column" scope="row">管理者</th>
             <td class="table-column" th:text="*{adminName}"></td>
           </tr>
           <tr>
-            <th class="table-column">資産名</th>
+            <th class="table-column" scope="row">資産名</th>
             <td class="table-column" th:text="*{assetName}"></td>
           </tr>
           <tr>
-            <th class="table-column">備考</th>
+            <th class="table-column" scope="row">備考</th>
             <td class="table-column" th:text="*{remarks}"></td>
           </tr>
           <tr>
-            <th class="table-column">シリアルID</th>
+            <th class="table-column" scope="row">シリアルID</th>
             <td class="table-column" th:text="*{serialId}"></td>
           </tr>
           <tr>
-            <th class="table-column">購入年月日</th>
+            <th class="table-column" scope="row">購入年月日</th>
             <td class="table-column" th:text="*{purchaseDate}"></td>
           </tr>
           <tr>
-            <th class="table-column">メーカー名</th>
+            <th class="table-column"  scope="row">メーカー名</th>
             <td class="table-column" th:text="*{makerName}"></td>
           </tr>
           <tr>
-            <th class="table-column">付属品</th>
+            <th class="table-column"  scope="row">付属品</th>
             <td class="table-column" th:text="*{accessory}"></td>
           </tr>
           <tr>
-            <th class="table-column">保管場所</th>
+            <th class="table-column" scope="row">保管場所</th>
             <td class="table-column" th:text="*{storingPlace}"></td>
           </tr>
         </table>
-        <div class="form-box">
+        <div class="form-box justify-content-center">
           <form th:action="@{/index/modify}" method="POST">
             <input type="hidden" name="id" th:value="*{id}" />
-            <button class="btn" type="submit">修正</button>
+            <button class="btn btn-info" type="submit">修正</button>
           </form>
           <form th:action="@{/asset/delete}" method="POST">
             <input type="hidden" name="id" th:value="*{id}" />
-            <button class="btn" type="submit">削除</button>
+            <button class="btn btn-danger" type="submit">削除</button>
           </form>
-          <button class="btn" type="button" onclick="window.print();">印刷</button>
+          <button class="btn btn-warning" type="button" onclick="window.print();">印刷</button>
         </div>
       </div>
     </main>
